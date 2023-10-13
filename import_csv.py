@@ -1,0 +1,12 @@
+# Patrick Liu
+# Student Number: 101142730
+
+import pandas as pd
+
+# Read the csv file
+df = pd.read_csv('Data/jena_climate_2009_2016.csv')
+# Slice [start:stop:step], starting from index 5 take every 6th record
+df = df[5::6]
+date_time = pd.to_datetime(df['Date Time'], format='%d.%m.%Y %H:%M:%S')
+# print(df.head())
+
