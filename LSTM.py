@@ -28,7 +28,7 @@ model.compile(
 )
 # model.summary()
 
-history = model.fit(trainX, trainY, batch_size=32, epochs=10, validation_split=0.1, verbose=2)
+history = model.fit(trainX, trainY, batch_size=32, epochs=20, validation_split=0.1, verbose=2)
 
 model.save(os.path.join('models', 'model.h5'))
 

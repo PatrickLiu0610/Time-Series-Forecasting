@@ -2,6 +2,7 @@
 # Student Number: 101142730
 
 import os
+import sys
 import numpy as np
 from import_csv import date_time
 from data_prep import trainX, scaler, df_for_training
@@ -12,7 +13,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 model = models.load_model(os.path.join('models', 'model.h5'))
 
-n_future = 7 * 365 * 24
+n_future = int(7.5 * 365 * 24)
 forecast_period_hours = pd.date_range(list(date_time)[-1], periods=n_future, freq='1h').to_list()
 # print(forecast_period_hours)
 
@@ -76,16 +77,25 @@ df_forecast = pd.DataFrame({'Date Time': np.array(forcast_hours),
 df_forecast['Date Time'] = pd.to_datetime(df_forecast['Date Time'], format='%d.%m.%Y %H:%M:%S')
 
 # Format: 'YYYY-MM-DD HH:MM:SS'
-# user_input = input("Enter Time Stamp: ")
-# weather_prediction = df_forecast.loc[df_forecast['Date Time'] == user_input]
-#
-# print(str(weather_prediction['Date Time']) + "\n" + str(weather_prediction['Pressure']) + "\n" +
-#       str(weather_prediction['Temperature in Degree']) + "\n" + str(weather_prediction['Temperature in Kelvin']) +
-#       "\n" + str(weather_prediction['temperature dew point']) + "\n" + str(weather_prediction['relative humidity'])
-#       + "\n" + str(weather_prediction['saturation vapor pressure']) + "\n" + str(weather_prediction['vapor pressure'])
-#       + "\n" + str(weather_prediction['vapor pressure deficit']) + "\n" + str(weather_prediction['specific humidity'])
-#       + "\n" + str(weather_prediction['water vapor concentration']) + "\n" + str(weather_prediction['airtight'])
-#       + "\n" + str(weather_prediction['wind speed']) + "\n" + str(weather_prediction['maximum wind speed']) + "\n" +
-#       str(weather_prediction['wind direction in degrees']) + "\n"
-#       )
+with open('output.txt', 'w') as f:
+    for x in range(1, len(sys.argv)):
+        weather_prediction = df_forecast.loc[df_forecast['Date Time'] == sys.argv[x]]
+
+        f.write(str(weather_prediction['Date Time'].values[0]) + "\n")
+        f.write(str(weather_prediction['Pressure'].values[0]) + "\n")
+        f.write(str(weather_prediction['Temperature in Degree'].values[0]) + "\n")
+        f.write(str(weather_prediction['Temperature in Kelvin'].values[0]) + "\n")
+        f.write(str(weather_prediction['temperature dew point'].values[0]) + "\n")
+        f.write(str(weather_prediction['relative humidity'].values[0]) + "\n")
+        f.write(str(weather_prediction['saturation vapor pressure'].values[0]) + "\n")
+        f.write(str(weather_prediction['vapor pressure'].values[0]) + "\n")
+        f.write(str(weather_prediction['vapor pressure deficit'].values[0]) + "\n")
+        f.write(str(weather_prediction['specific humidity'].values[0]) + "\n")
+        f.write(str(weather_prediction['water vapor concentration'].values[0]) + "\n")
+        f.write(str(weather_prediction['airtight'].values[0]) + "\n")
+        f.write(str(weather_prediction['wind speed'].values[0]) + "\n")
+        f.write(str(weather_prediction['maximum wind speed'].values[0]) + "\n")
+        f.write(str(weather_prediction['wind direction in degrees'].values[0]) + "\n\n")
+
+f.close()
 
