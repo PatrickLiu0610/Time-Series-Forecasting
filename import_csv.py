@@ -10,3 +10,12 @@ df = df[5::6]
 date_time = pd.to_datetime(df['Date Time'], format='%d.%m.%Y %H:%M:%S')
 # print(df.head())
 
+# Replace bad wind speed data with 0
+wv = df['wv (m/s)']
+bad_wv = wv == -9999.0
+wv[bad_wv] = 0.0
+
+max_wv = df['max. wv (m/s)']
+bad_max_wv = max_wv == -9999.0
+max_wv[bad_max_wv] = 0.0
+

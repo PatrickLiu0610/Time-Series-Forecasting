@@ -97,5 +97,22 @@ with open('output.txt', 'w') as f:
         f.write(str(weather_prediction['maximum wind speed'].values[0]) + "\n")
         f.write(str(weather_prediction['wind direction in degrees'].values[0]) + "\n\n")
 
+        # For Visualization
+        # f.write("Date Time: " + str(weather_prediction['Date Time'].values[0]) + "\n")
+        # f.write("Pressure: " + str(weather_prediction['Pressure'].values[0]) + "\n")
+        # f.write("Temperature in Degree" + str(weather_prediction['Temperature in Degree'].values[0]) + "\n")
+        # f.write("Temperature in Kelvin: " + str(weather_prediction['Temperature in Kelvin'].values[0]) + "\n")
+        # f.write("Temperature Dew Point: " + str(weather_prediction['temperature dew point'].values[0]) + "\n")
+        # f.write("Relative Humidity: " + str(weather_prediction['relative humidity'].values[0]) + "\n")
+        # f.write("Saturation Vapor Pressure: " + str(weather_prediction['saturation vapor pressure'].values[0]) + "\n")
+        # f.write("Vapor Pressure: " + str(weather_prediction['vapor pressure'].values[0]) + "\n")
+        # f.write("Vapor Pressure Deficit: " + str(weather_prediction['vapor pressure deficit'].values[0]) + "\n")
+        # f.write("Specific Humidity: " + str(weather_prediction['specific humidity'].values[0]) + "\n")
+        # f.write("Water Vapor Concentration: " + str(weather_prediction['water vapor concentration'].values[0]) + "\n")
+        # f.write("Airtight: " + str(weather_prediction['airtight'].values[0]) + "\n")
+        # f.write("Wind Speed: " + str(weather_prediction['wind speed'].values[0]) + "\n")
+        # f.write("Maximum Wind Speed: " + str(weather_prediction['maximum wind speed'].values[0]) + "\n")
+        # f.write("Wind Direction in Degrees: " + str(weather_prediction['wind direction in degrees'].values[0])+"\n\n")
+
 f.close()
 
