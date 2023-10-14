@@ -100,7 +100,7 @@ with open('output.txt', 'w') as f:
         # For Visualization
         # f.write("Date Time: " + str(weather_prediction['Date Time'].values[0]) + "\n")
         # f.write("Pressure: " + str(weather_prediction['Pressure'].values[0]) + "\n")
-        # f.write("Temperature in Degree" + str(weather_prediction['Temperature in Degree'].values[0]) + "\n")
+        # f.write("Temperature in Degree: " + str(weather_prediction['Temperature in Degree'].values[0]) + "\n")
         # f.write("Temperature in Kelvin: " + str(weather_prediction['Temperature in Kelvin'].values[0]) + "\n")
         # f.write("Temperature Dew Point: " + str(weather_prediction['temperature dew point'].values[0]) + "\n")
         # f.write("Relative Humidity: " + str(weather_prediction['relative humidity'].values[0]) + "\n")

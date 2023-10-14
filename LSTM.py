@@ -1,4 +1,4 @@
-# Patrick Liu
+# Name: Patrick Liu
 # Student Number: 101142730
 
 import os

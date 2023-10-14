@@ -9,7 +9,7 @@ from import_csv import df
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 cols = list(df)[1:15]
-# Date and volume columns are not used in training.
+# Date Time columns are not used in training.
 # print(cols)
 df_for_training = df[cols].astype(float)
 
@@ -24,8 +24,10 @@ df_for_training_scaled = scaler.transform(df_for_training)
 trainX = []
 trainY = []
 
-n_future = 1  # Number of days we want to look into the future based on the past days.
-n_past = 14  # Number of past days we want to use to predict the future.
+n_future = 1  # Number of hours we want to look into the future based on the past days.
+n_past = 14  # Number of past hours we want to use to predict the future.
+
+# print(df_for_training_scaled.shape)
 
 for i in range(n_past, len(df_for_training_scaled) - n_future + 1):
     trainX.append(df_for_training_scaled[i - n_past:i, 0:df_for_training.shape[1]])
