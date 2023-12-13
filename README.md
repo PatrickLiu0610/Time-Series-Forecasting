@@ -16,6 +16,11 @@ pip install numpy==1.26.0
 pip install pandas
 pip install -U scikit-learn
 ```
+Or alternatively, for the Python package dependencies:
+```
+pip install -r requirements.txt
+```
+
 Note: pip might throw dependency errors since it automatically upgrades certain packages during installation, downgrade them if the version number is too high
 
 #### 5. Verify tensorflow can detect your GPU by running the following command:
