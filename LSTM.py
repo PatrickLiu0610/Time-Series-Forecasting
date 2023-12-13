@@ -30,13 +30,19 @@ model.add(layers.LSTM(32,
 model.add(layers.Dropout(0.2))
 model.add(layers.Dense(trainY.shape[1]))
 
+print("Compiling the model...")
 model.compile(
     loss='mse',
     optimizer='adam',
 )
+print("Finished compiling the model!")
 # model.summary()
 
-history = model.fit(trainX, trainY, batch_size=32, validation_split=0.1, verbose=2, callbacks=[MaxAccuracyCallback])
+callback = MaxAccuracyCallback()
+
+print("Fitting the training data onto the model...")
+history = model.fit(trainX, trainY, batch_size=32, validation_split=0.1, verbose=2, callbacks=[callback])
+print("Finished fitting the model!")
 
 model.save(os.path.join('models', 'model.h5'))
 
