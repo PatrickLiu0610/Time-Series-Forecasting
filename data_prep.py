@@ -13,7 +13,7 @@ cols = list(df)[1:15]
 # print(cols)
 df_for_training = df[cols].astype(float)
 
-# normalize the dataset
+# standardize the dataset
 scaler = StandardScaler()
 scaler = scaler.fit(df_for_training)
 df_for_training_scaled = scaler.transform(df_for_training)

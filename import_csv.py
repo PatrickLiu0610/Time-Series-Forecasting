@@ -7,7 +7,7 @@ import pandas as pd
 df = pd.read_csv('Data/jena_climate_2009_2016.csv')
 # print(df.head(10))
 # Slice [start:stop:step], starting from index 5 take every 6th record
-df = df[5::6]
+df = df[4::6]
 date_time = pd.to_datetime(df['Date Time'], format='%d.%m.%Y %H:%M:%S')
 # print(df.head())
 
