@@ -4,13 +4,13 @@
 import os
 from keras import models
 from keras import layers
-import tensorflow as tf
+from keras.callbacks import Callback
 from data_prep import trainX, trainY
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 MAX_ACCURACY = 0.99
 
-class MaxAccuracyCallback(tf.keras.callbacks.Callback):
+class MaxAccuracyCallback(Callback):
     def on_epoch_end(self, epoch, logs={}):
         if logs.get('accuracy') is not None and logs.get('accuracy') > MAX_ACCURACY:
             print(f"Reached max accuracy of {MAX_ACCURACY}. Ending training")
