@@ -4,6 +4,7 @@
 import os
 from keras import models
 from keras import layers
+from keras import losses
 from data_prep import trainX, trainY
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -23,12 +24,13 @@ model.add(layers.Dropout(0.2))
 model.add(layers.Dense(trainY.shape[1]))
 
 model.compile(
-    loss='mse',
+    loss=losses.SparseCategoricalCrossentropy(from_logits=True),
     optimizer='adam',
+    metrics=["accuracy"]
 )
 # model.summary()
 
-history = model.fit(trainX, trainY, batch_size=32, epochs=20, validation_split=0.1, verbose=2)
+history = model.fit(trainX, trainY, batch_size=32, epochs=5, validation_split=0.1, verbose=2)
 
 model.save(os.path.join('models', 'model.h5'))
 
