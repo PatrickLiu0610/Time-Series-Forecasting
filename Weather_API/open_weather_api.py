@@ -5,7 +5,7 @@ import pandas as pd
 import requests
 
 request_url = "https://api.openweathermap.org/data/2.5/weather?"
-api_key = "c543b24da04efb3ddba636104d7bb1fa"
+api_key = "OPEN WEATHER API KEY"
 
 city = "Ottawa"
 url = request_url + "appid=" + api_key + "&q=" + city
