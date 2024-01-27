@@ -22,17 +22,36 @@ Note: pip might throw dependency errors since it automatically upgrades certain 
 ```
 python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 ```
-## Using the Prediction Model
+## Using the Jena_Germany Prediction Model
 
 #### 1. Create the model by running the following command:
 ```
-python LSTM.py
+python Jena_Germany/LSTM.py
 ```
-#### 2. Obtained the prediction result by calling function "get_prediction":
+#### 2. Obtained the prediction result by calling function "get_prediction" from forcast.py:
 ```
 get_prediction(["YYYY-MM-DD HH:MM:SS", "YYYY-MM-DD HH:MM:SS", ...])
 ```
 #### Return format:
 ```
-[{'Date Time': '2024-01-16T12:00:00.000000000', 'Pressure': 998.18726, 'Temperature in Degree': 18.494009, 'Temperature in Kelvin': 292.62372, 'temperature dew point': 12.183469, 'relative humidity': 93.700836, 'saturation vapor pressure': 21.885607, 'vapor pressure': 14.027145, 'vapor pressure deficit': 9.299135, 'specific humidity': 8.8748255, 'water vapor concentration': 14.188606, 'airtight': 1258.99, 'wind speed': 3.7843738, 'maximum wind speed': 6.0429506, 'wind direction in degrees': 267.67197}, {...}, ...]
+[{'Date Time': '2024-01-16T12:00:00.000000000', 'Pressure': 998.18726, 'Temperature in Degree': 18.494009, 
+'Temperature in Kelvin': 292.62372, 'temperature dew point': 12.183469, 'relative humidity': 93.700836, 
+'saturation vapor pressure': 21.885607, 'vapor pressure': 14.027145, 'vapor pressure deficit': 9.299135, 
+'specific humidity': 8.8748255, 'water vapor concentration': 14.188606, 'airtight': 1258.99, 'wind speed': 3.7843738, 
+'maximum wind speed': 6.0429506, 'wind direction in degrees': 267.67197}, {...}, ...]
 ```
+## Using the Ottawa_Canada Prediction Model
+#### 1. Create the model by running the following command:
+```
+python Ottawa_Canada/LSTM.py
+```
+#### 2. Obtained the prediction result by calling function "get_prediction" from forcast.py:
+```
+get_prediction()
+```
+#### Return format:
+```
+[0.77169657, 61.60594, 0.0, 8.173939, 100.1585]
+```
+The values in the list represents Temp (°C), Rel Hum (%), Precip. Amount (mm), Wind Spd (km/h), 'Station Pressure (kPa)' 
+respectively
