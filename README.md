@@ -53,5 +53,5 @@ get_prediction()
 ```
 [0.77169657, 61.60594, 0.0, 8.173939, 100.1585]
 ```
-The values in the list represents Temp (°C), Rel Hum (%), Precip. Amount (mm), Wind Spd (km/h), 'Station Pressure (kPa)' 
+The values in the list represents Temp (°C), Rel Hum (%), Precip. Amount (mm), Wind Spd (km/h), Station Pressure (kPa) 
 respectively

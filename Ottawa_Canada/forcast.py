@@ -29,7 +29,3 @@ def get_prediction():
         forcast_weather.append(y_pred_future[0][x])
 
     return forcast_weather
-
-
-if __name__ == "__main__":
-    print(get_prediction())
