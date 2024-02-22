@@ -4,7 +4,7 @@
 import os
 import numpy as np
 from Ottawa_Canada.data_prep import scaler, df_for_training
-from Weather_API.open_weather_api import api_data_df
+from Weather_API.open_weather_api import get_ottawa_weather, get_current_weather
 from keras import models
 import pandas as pd
 
@@ -33,7 +33,7 @@ def perform_prediction(dataframe):
 def get_prediction():
     forcast_weather = []
 
-    prediction = perform_prediction(api_data_df)
+    prediction = perform_prediction(get_ottawa_weather())
 
     for x in range(len(prediction[0])):
         forcast_weather.append(prediction[0][x])
@@ -49,6 +49,17 @@ def get_prediction_with_input(temperature, humidity, precipitation, wind_speed, 
     prediction = perform_prediction(weather_dataframe)
 
     forcast_weather = []
+    for x in range(len(prediction[0])):
+        forcast_weather.append(prediction[0][x])
+
+    return forcast_weather
+
+
+def get_prediction_with_coordinate(lat, lon):
+    forcast_weather = []
+
+    prediction = perform_prediction(get_current_weather(lat, lon))
+
     for x in range(len(prediction[0])):
         forcast_weather.append(prediction[0][x])
 

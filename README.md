@@ -65,3 +65,13 @@ get_prediction_with_input(temperature, humidity, precipitation, wind_speed, pres
 ```
 The values in the list represents Temp (°C), Rel Hum (%), Precip. Amount (mm), Wind Spd (km/h), Station Pressure (kPa) 
 respectively
+#### 4. Obtained the prediction result by calling function "get_prediction_with_coordinate" from forcast.py (with Lat Lon coordinates):
+```
+get_prediction_with_input(lat, lon)
+```
+#### Return format:
+```
+[5.24966, 68.19087, 0.0, 10.805099, 100.468]
+```
+The values in the list represents Temp (°C), Rel Hum (%), Precip. Amount (mm), Wind Spd (km/h), Station Pressure (kPa) 
+respectively
