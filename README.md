@@ -45,13 +45,33 @@ get_prediction(["YYYY-MM-DD HH:MM:SS", "YYYY-MM-DD HH:MM:SS", ...])
 ```
 python Ottawa_Canada/LSTM.py
 ```
-#### 2. Obtained the prediction result by calling function "get_prediction" from forcast.py:
+#### 2. Obtained the prediction result by calling function "get_prediction" from forcast.py (with Open Weather API):
 ```
 get_prediction()
 ```
 #### Return format:
 ```
 [0.77169657, 61.60594, 0.0, 8.173939, 100.1585]
+```
+The values in the list represents Temp (°C), Rel Hum (%), Precip. Amount (mm), Wind Spd (km/h), Station Pressure (kPa) 
+respectively
+#### 3. Obtained the prediction result by calling function "get_prediction_with_input" from forcast.py (with manual data input):
+```
+get_prediction_with_input(temperature, humidity, precipitation, wind_speed, pressure)
+```
+#### Return format:
+```
+[3.4813476, 65.59054, 18.2, 9.766075, 100.34578]
+```
+The values in the list represents Temp (°C), Rel Hum (%), Precip. Amount (mm), Wind Spd (km/h), Station Pressure (kPa) 
+respectively
+#### 4. Obtained the prediction result by calling function "get_prediction_with_coordinate" from forcast.py (with Lat Lon coordinates):
+```
+get_prediction_with_input(lat, lon)
+```
+#### Return format:
+```
+[5.24966, 68.19087, 0.0, 10.805099, 100.468]
 ```
 The values in the list represents Temp (°C), Rel Hum (%), Precip. Amount (mm), Wind Spd (km/h), Station Pressure (kPa) 
 respectively
