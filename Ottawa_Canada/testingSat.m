@@ -1,4 +1,4 @@
-function testingSat(simTimeArgs, satCmnArgs, sat1Args, sat2Args, sat3Args)
+function testingSat(simTimeArgs, satCmnArgs, sat1Args, sat2Args, sat3Args, gsArgs)
 
 close all;
 
@@ -81,8 +81,8 @@ gaussianAntenna(rxSat3,DishDiameter=dishDiameter,ApertureEfficiency=apertureEffi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ground stations %%%%%%%%%%%%%%%%%%%%%%%%
 gs1 = groundStation(sc,Name="Ground Station 1");
 
-latitude = 52.2294963;                                              % degrees
-longitude = 0.1487094;                                              % degrees
+latitude = gsArgs.gs2Lat;                                              % degrees
+longitude = gsArgs.gs2Long;                                              % degrees
 gs2 = groundStation(sc,latitude,longitude,Name="Ground Station 2");
 
 gimbalgs1 = gimbal(gs1);
