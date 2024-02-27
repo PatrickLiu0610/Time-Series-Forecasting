@@ -1,4 +1,4 @@
-function testingSat(simTimeArgs, sat1Args, sat2Args)
+function testingSat(simTimeArgs, sat1Args, sat2Args, sat3Args)
 
 close all;
 
@@ -34,12 +34,12 @@ gimbalrxSat2 = gimbal(sat2);
 gimbaltxSat2 = gimbal(sat2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = 10000000;                                                                  % meters
-eccentricity = 0;
-inclination = 60;                                                                          % degrees
-rightAscensionOfAscendingNode = 0;                                                         % degrees
-argumentOfPeriapsis = 0;                                                                   % degrees
-trueAnomaly = -110;                                                                           % degrees
+semiMajorAxis = sat3Args.axis;                                                                   % meters
+eccentricity = sat3Args.ecc;
+inclination = sat3Args.inc;                                                                           % degrees
+rightAscensionOfAscendingNode = sat3Args.asc;                                                          % degrees
+argumentOfPeriapsis = sat3Args.periapsis;                                                                    % degrees
+trueAnomaly = sat3Args.ano;                                                                            % degrees
 sat3 = satellite(sc,semiMajorAxis,eccentricity,inclination,rightAscensionOfAscendingNode, ...
     argumentOfPeriapsis,trueAnomaly,Name="Satelitte 3");
 
