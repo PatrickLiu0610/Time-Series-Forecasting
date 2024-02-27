@@ -1,3 +1,5 @@
+function testingSat()
+
 close all;
 
 startTime = datetime(2023,10,21,1,13,0);
@@ -128,7 +130,7 @@ satellites = cell(1, numel(bestSats)); % Convert to row array
 for i = 1:numel(bestSats)
     satellites{i} = ['sat' num2str(bestSats(i))];
 end
-bestSatsName = cellfun(@(x) evalin('base', x), satellites);
+bestSatsName = cellfun(@(x) evalin('caller', x), satellites);
 disp(bestSatsName);
 
 s = bestSatsName;     % list of all good weather satellites
@@ -163,3 +165,4 @@ end
 play(sc);
 
 
+end
