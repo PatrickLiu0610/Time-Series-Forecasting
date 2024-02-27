@@ -1,4 +1,4 @@
-function testingSat(simTimeArgs, sat1Args)
+function testingSat(simTimeArgs, sat1Args, sat2Args)
 
 close all;
 
@@ -13,7 +13,7 @@ eccentricity = sat1Args.ecc;
 inclination = sat1Args.inc;                                                                          % degrees
 rightAscensionOfAscendingNode = sat1Args.asc;                                                         % degrees
 argumentOfPeriapsis = sat1Args.periapsis;                                                                   % degrees
-trueAnomaly = 0;                                                                           % degrees
+trueAnomaly = sat1Args.ano;                                                                           % degrees
 sat1 = satellite(sc,semiMajorAxis,eccentricity,inclination,rightAscensionOfAscendingNode, ...
     argumentOfPeriapsis,trueAnomaly,Name="Satelitte 1");
 
@@ -21,12 +21,12 @@ gimbalrxSat1 = gimbal(sat1);
 gimbaltxSat1 = gimbal(sat1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = 10000000;                                                                   % meters
-eccentricity = 0;
-inclination = 60;                                                                           % degrees
-rightAscensionOfAscendingNode = 0;                                                          % degrees
-argumentOfPeriapsis = 0;                                                                    % degrees
-trueAnomaly = -55;                                                                            % degrees
+semiMajorAxis = sat2Args.axis;                                                                   % meters
+eccentricity = sat2Args.ecc;
+inclination = sat2Args.inc;                                                                           % degrees
+rightAscensionOfAscendingNode = sat2Args.asc;                                                          % degrees
+argumentOfPeriapsis = sat2Args.periapsis;                                                                    % degrees
+trueAnomaly = sat2Args.ano;                                                                            % degrees
 sat2 = satellite(sc,semiMajorAxis,eccentricity,inclination,rightAscensionOfAscendingNode, ...
     argumentOfPeriapsis,trueAnomaly,Name="Satelitte 2");
 
