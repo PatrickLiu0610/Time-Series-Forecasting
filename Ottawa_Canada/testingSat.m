@@ -1,9 +1,9 @@
-function testingSat()
+function testingSat(kwargs)
 
 close all;
 
-startTime = datetime(2023,10,21,1,13,0);
-stopTime = startTime + hours(5);
+startTime = datetime(kwargs.startYear, kwargs.startMonth, kwargs.startDay,1,13,0);
+stopTime = startTime + hours(kwargs.simDuration);
 sampleTime = 60;
 sc = satelliteScenario(startTime,stopTime,sampleTime);
 
