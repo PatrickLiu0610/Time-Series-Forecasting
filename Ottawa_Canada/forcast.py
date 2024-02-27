@@ -3,8 +3,8 @@
 
 import os
 import numpy as np
-from Ottawa_Canada.data_prep import scaler, df_for_training
-from Weather_API.open_weather_api import get_ottawa_weather, get_current_weather
+from data_prep import scaler, df_for_training
+from open_weather_api import api_data_df
 from keras import models
 import pandas as pd
 
