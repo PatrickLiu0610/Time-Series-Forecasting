@@ -1,18 +1,18 @@
-function testingSat(kwargs)
+function testingSat(simTimeArgs, sat1Args)
 
 close all;
 
-startTime = datetime(kwargs.startYear, kwargs.startMonth, kwargs.startDay,1,13,0);
-stopTime = startTime + hours(kwargs.simDuration);
+startTime = datetime(simTimeArgs.startYear, simTimeArgs.startMonth, simTimeArgs.startDay,1,13,0);
+stopTime = startTime + hours(simTimeArgs.simDuration);
 sampleTime = 60;
 sc = satelliteScenario(startTime,stopTime,sampleTime);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = 10000000;                                                                  % meters
-eccentricity = 0;
-inclination = 60;                                                                          % degrees
-rightAscensionOfAscendingNode = 0;                                                         % degrees
-argumentOfPeriapsis = 0;                                                                   % degrees
+semiMajorAxis = sat1Args.axis;                                                                  % meters
+eccentricity = sat1Args.ecc;
+inclination = sat1Args.inc;                                                                          % degrees
+rightAscensionOfAscendingNode = sat1Args.asc;                                                         % degrees
+argumentOfPeriapsis = sat1Args.periapsis;                                                                   % degrees
 trueAnomaly = 0;                                                                           % degrees
 sat1 = satellite(sc,semiMajorAxis,eccentricity,inclination,rightAscensionOfAscendingNode, ...
     argumentOfPeriapsis,trueAnomaly,Name="Satelitte 1");
