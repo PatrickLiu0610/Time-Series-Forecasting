@@ -89,9 +89,9 @@ gimbalgs1 = gimbal(gs1);
 gimbalgs2 = gimbal(gs2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% transmitting antenna of GS1 %%%%%%%%%%%%%%%%
-frequency = 30e9;                                                                          % Hz
-power = 40;                                                                                % dBW
-bitRate = 20;                                                                              % Mbps
+frequency = gsArgs.gs1Freq;                                                                          % Hz
+power = gsArgs.gs1Power;                                                                                % dBW
+bitRate = gsArgs.gs1BitRate;                                                                              % Mbps
 txGs1 = transmitter(gimbalgs1,Name="Ground Station 1 Transmitter",Frequency=frequency, ...
         Power=power,BitRate=bitRate);
 
