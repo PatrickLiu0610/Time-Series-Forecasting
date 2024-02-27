@@ -1,4 +1,4 @@
-function testingSat(simTimeArgs, sat1Args, sat2Args, sat3Args)
+function testingSat(simTimeArgs, satCmnArgs, sat1Args, sat2Args, sat3Args)
 
 close all;
 
@@ -57,10 +57,10 @@ rxSat3 = receiver(gimbalrxSat1,Name="Satellite 3 Receiver",GainToNoiseTemperatur
     gainToNoiseTemperatureRatio,SystemLoss=systemLoss);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% transmitting antennas of satellites %%%%%%%%%%%%%%%%
-frequency = 27e9;                                                                     % Hz
-power = 20;                                                                           % dBW
-bitRate = 20;                                                                         % Mbps
-systemLoss = 3;                                                                       % dB
+frequency = satCmnArgs.freq;                                                                     % Hz
+power = satCmnArgs.power;                                                                           % dBW
+bitRate = satCmnArgs.bitRate;                                                                         % Mbps
+systemLoss = satCmnArgs.sysLoss;                                                                       % dB
 txSat1 = transmitter(gimbaltxSat1,Name="Satellite 1 Transmitter",Frequency=frequency, ...
     power=power,BitRate=bitRate,SystemLoss=systemLoss);
 txSat2 = transmitter(gimbaltxSat1,Name="Satellite 2 Transmitter",Frequency=frequency, ...
