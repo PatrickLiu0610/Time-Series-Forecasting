@@ -1,19 +1,17 @@
-function testingSat(simTimeArgs, satCmnArgs, sat1Args, sat2Args, sat3Args, gsArgs)
-
 close all;
 
-startTime = datetime(simTimeArgs.startYear, simTimeArgs.startMonth, simTimeArgs.startDay,1,13,0);
-stopTime = startTime + hours(simTimeArgs.simDuration);
+startTime = datetime(2023,10,21,1,13,0);
+stopTime = startTime + hours(5);
 sampleTime = 60;
 sc = satelliteScenario(startTime,stopTime,sampleTime);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = sat1Args.axis;                                                                  % meters
-eccentricity = sat1Args.ecc;
-inclination = sat1Args.inc;                                                                          % degrees
-rightAscensionOfAscendingNode = sat1Args.asc;                                                         % degrees
-argumentOfPeriapsis = sat1Args.periapsis;                                                                   % degrees
-trueAnomaly = sat1Args.ano;                                                                           % degrees
+semiMajorAxis = 10000000;                                                                  % meters
+eccentricity = 0;
+inclination = 60;                                                                          % degrees
+rightAscensionOfAscendingNode = 0;                                                         % degrees
+argumentOfPeriapsis = 0;                                                                   % degrees
+trueAnomaly = 0;                                                                           % degrees
 sat1 = satellite(sc,semiMajorAxis,eccentricity,inclination,rightAscensionOfAscendingNode, ...
     argumentOfPeriapsis,trueAnomaly,Name="Satelitte 1");
 
@@ -21,12 +19,12 @@ gimbalrxSat1 = gimbal(sat1);
 gimbaltxSat1 = gimbal(sat1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = sat2Args.axis;                                                                   % meters
-eccentricity = sat2Args.ecc;
-inclination = sat2Args.inc;                                                                           % degrees
-rightAscensionOfAscendingNode = sat2Args.asc;                                                          % degrees
-argumentOfPeriapsis = sat2Args.periapsis;                                                                    % degrees
-trueAnomaly = sat2Args.ano;                                                                            % degrees
+semiMajorAxis = 10000000;                                                                   % meters
+eccentricity = 0;
+inclination = 60;                                                                           % degrees
+rightAscensionOfAscendingNode = 0;                                                          % degrees
+argumentOfPeriapsis = 0;                                                                    % degrees
+trueAnomaly = -55;                                                                            % degrees
 sat2 = satellite(sc,semiMajorAxis,eccentricity,inclination,rightAscensionOfAscendingNode, ...
     argumentOfPeriapsis,trueAnomaly,Name="Satelitte 2");
 
@@ -34,12 +32,12 @@ gimbalrxSat2 = gimbal(sat2);
 gimbaltxSat2 = gimbal(sat2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = sat3Args.axis;                                                                   % meters
-eccentricity = sat3Args.ecc;
-inclination = sat3Args.inc;                                                                           % degrees
-rightAscensionOfAscendingNode = sat3Args.asc;                                                          % degrees
-argumentOfPeriapsis = sat3Args.periapsis;                                                                    % degrees
-trueAnomaly = sat3Args.ano;                                                                            % degrees
+semiMajorAxis = 10000000;                                                                  % meters
+eccentricity = 0;
+inclination = 60;                                                                          % degrees
+rightAscensionOfAscendingNode = 0;                                                         % degrees
+argumentOfPeriapsis = 0;                                                                   % degrees
+trueAnomaly = -110;                                                                           % degrees
 sat3 = satellite(sc,semiMajorAxis,eccentricity,inclination,rightAscensionOfAscendingNode, ...
     argumentOfPeriapsis,trueAnomaly,Name="Satelitte 3");
 
@@ -57,10 +55,10 @@ rxSat3 = receiver(gimbalrxSat1,Name="Satellite 3 Receiver",GainToNoiseTemperatur
     gainToNoiseTemperatureRatio,SystemLoss=systemLoss);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% transmitting antennas of satellites %%%%%%%%%%%%%%%%
-frequency = satCmnArgs.freq;                                                                     % Hz
-power = satCmnArgs.power;                                                                           % dBW
-bitRate = satCmnArgs.bitRate;                                                                         % Mbps
-systemLoss = satCmnArgs.sysLoss;                                                                       % dB
+frequency = 27e9;                                                                     % Hz
+power = 20;                                                                           % dBW
+bitRate = 20;                                                                         % Mbps
+systemLoss = 3;                                                                       % dB
 txSat1 = transmitter(gimbaltxSat1,Name="Satellite 1 Transmitter",Frequency=frequency, ...
     power=power,BitRate=bitRate,SystemLoss=systemLoss);
 txSat2 = transmitter(gimbaltxSat1,Name="Satellite 2 Transmitter",Frequency=frequency, ...
@@ -81,17 +79,17 @@ gaussianAntenna(rxSat3,DishDiameter=dishDiameter,ApertureEfficiency=apertureEffi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ground stations %%%%%%%%%%%%%%%%%%%%%%%%
 gs1 = groundStation(sc,Name="Ground Station 1");
 
-latitude = gsArgs.gs2Lat;                                              % degrees
-longitude = gsArgs.gs2Long;                                              % degrees
+latitude = 52.2294963;                                              % degrees
+longitude = 0.1487094;                                              % degrees
 gs2 = groundStation(sc,latitude,longitude,Name="Ground Station 2");
 
 gimbalgs1 = gimbal(gs1);
 gimbalgs2 = gimbal(gs2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% transmitting antenna of GS1 %%%%%%%%%%%%%%%%
-frequency = gsArgs.gs1Freq;                                                                          % Hz
-power = gsArgs.gs1Power;                                                                                % dBW
-bitRate = gsArgs.gs1BitRate;                                                                              % Mbps
+frequency = 30e9;                                                                          % Hz
+power = 40;                                                                                % dBW
+bitRate = 20;                                                                              % Mbps
 txGs1 = transmitter(gimbalgs1,Name="Ground Station 1 Transmitter",Frequency=frequency, ...
         Power=power,BitRate=bitRate);
 
@@ -118,19 +116,19 @@ pointAt(gimbalrxSat3, gs1); % Aim Satellite 3's receiver towards Ground Station 
 pointAt(gimbaltxSat3, gs2); % Aim Satellite 3's transmitter towards Ground Station 2
 pointAt(gimbalgs2, sat3); % Aim Ground Station 2 towards Satellite 3
 
-%%%%%%%%%%%%%%%%%%%%% Getting best satellites from middleman %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% Getting best satellites from weatherStation %%%%%%%%%%%%%%%%
 % Set the desired number of satellites 
 % (assume its 1 for now since other one is already in the array)
 numSat = 3;
 
-bestSats= middleMan(numSat);
+bestSats= linkBudget(numSat);
 satellites = cell(1, numel(bestSats)); % Convert to row array
 
 % Get best satellite names
 for i = 1:numel(bestSats)
     satellites{i} = ['sat' num2str(bestSats(i))];
 end
-bestSatsName = cellfun(@(x) evalin('caller', x), satellites);
+bestSatsName = cellfun(@(x) evalin('base', x), satellites);
 disp(bestSatsName);
 
 s = bestSatsName;     % list of all good weather satellites
@@ -165,4 +163,3 @@ end
 play(sc);
 
 
-end
