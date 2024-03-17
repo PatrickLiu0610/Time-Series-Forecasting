@@ -1,15 +1,27 @@
-% Vapor pressure function (in kPa)
-function vp = vapor_pressure(relative_humidity, T_ref)
-    saturation_pressure = 0.611 * exp(17.67 * T_ref / (T_ref - 243.04));
-    vp = relative_humidity * saturation_pressure / 100; 
-end
-
-% Vapor density function (in kg/m^3)
-function vd = vapor_density(relative_humidity, T_ref)
-    molar_mass = 0.018015; % Molar mass of water vapor (kg/mol)
-    gas_constant = 8.31447; % Universal gas constant (kJ/mol*K)
-    pressure = 101.325; % Atmospheric pressure (in kPa) 
-
-    vapor_pressure_kPa = vapor_pressure(relative_humidity, T_ref);
-    vd = vapor_pressure_kPa * molar_mass / (gas_constant * T_ref) / pressure;
+function vd = vapour_density(weatherData)
+    
+    
+    temp = weatherData(1);
+    tempK = temp + 273.15;
+    RH = weatherData(2)/100;
+    
+    % On Liquid
+    b = 17.502;             
+    c = 240.97;                                   %Celsius
+    
+    % Saturation Vapour Pressure
+    Ps = 0.611E3 * exp((b*temp)/(c+temp));        %Pascals
+    
+    % Actual Vapour Pressure
+    Pa = RH * Ps;                                 %Pascals
+    
+    % Molecular weight of water in g/mol
+    Mw = 18.02;
+    
+    % Gas constant in J/molK
+    R = 8.31;
+    
+    % Vapor Density
+    vd = (Pa * Mw)/(R * tempK);                   %g/m^3
+    
 end

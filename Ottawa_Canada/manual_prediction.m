@@ -19,7 +19,7 @@ function result_array = manual_prediction(temperature, humidity, precipitaiton, 
         precipitation = precipitaiton, wind_speed = wind_speed, pressure = pressure);
     disp(result)
 
-    %%% Farhats code
+    %%% --------------Author: Farhat Ishhaq #101167972 -----------------
     
     
     % Convert the Python list to a MATLAB cell array

@@ -88,9 +88,9 @@ function [bestSatIndexArrayToSend, dataRequiredToSend] = weatherStation(numSat)
     result = top_2_satellites;
 
 
-    anotherResult = {data, result};
-    dataArray = anotherResult{1};  
-    bestSatIndexArray = anotherResult{2};
+    combinedDataResult = {data, result};
+    dataArray = combinedDataResult{1};  
+    bestSatIndexArray = combinedDataResult{2};
 
     bestSatIndexArrayToSend = sort(bestSatIndexArray, 'ascend');
     dataRequiredToSend = [];
