@@ -168,33 +168,65 @@ gaussianAntenna(gs2Rx, ...
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Antenna Pointings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-pointAt(gimbalGs1,sat1);
-pointAt(gimbalSat1Rx,gs1);
-pointAt(gimbalSat1Tx,sat2);
-pointAt(gimbalSat2Rx,sat1);
-pointAt(gimbalSat2Tx,sat3);
-pointAt(gimbalSat3Rx,sat2);
-pointAt(gimbalSat3Tx,gs2);
-pointAt(gimbalGs2,sat3);
+bestSats = middleMan(3);
+satellites = cell(1, numel(bestSats)); % Convert to row array
+transmitters = cell(1,1); % Convert to row array
+    % Get best satellite names
+    for i = 1:numel(bestSats)
+        satellites{i} = ['sat' num2str(bestSats(i))];
+    end
+    
+    bestSatsName = cellfun(@(x) evalin('base', x), satellites);
+    disp(bestSatsName);
+    
+    % Get best satellite Receivers and Transmitters
+   
+    for i = 1:length(bestSats)
+        transmitter{i} = ['sat', num2str(bestSats(i)), 'Tx'];
+    end
+    
+    transmitters = cellfun(@(x) evalin('base', x), transmitter);
+    disp(transmitters);
+    
+    for i = 1:length(bestSats)
+        receiver{i} = ['sat', num2str(bestSats(i)), 'Rx'];
+    end
+    
+    receivers = cellfun(@(x) evalin('base', x), receiver);
+    disp(receivers)
 
-% top_2 = multihop();
+bestSat1 = bestSatsName(1);
+bestSat1Rx = receivers(1);
+bestSat1Tx = transmitters(1);
+
+bestSat2 = bestSatsName(2);
+bestSat2Rx = receivers(2);
+bestSat2Tx = transmitters(2);
+
+gimbalbestSat1Tx = gimbalSat1Tx;
+gimbalbestSat1Rx = gimbalSat1Rx;
+gimbalbestSat2Tx = gimbalSat2Tx;
+gimbalbestSat2Rx = gimbalSat2Rx;
+
+pointAt(gimbalGs1,bestSat1);
+pointAt(gimbalbestSat1Rx,gs1);
+pointAt(gimbalbestSat1Tx,bestSat2);
+pointAt(gimbalbestSat2Rx,bestSat1);
+pointAt(gimbalbestSat2Tx,gs2);
+pointAt(gimbalGs2,bestSat2);
 
 % Define link configurations in separate link objects
-link_config1 = link(gs1Tx, sat1Rx);
-link_config2 = link(sat1Tx, sat2Rx);
-link_config3 = link(sat2Tx, sat3Rx);
-link_config4 = link(sat3Tx, gs2Rx);
+link_config1 = link(gs1Tx, bestSat1Rx);
+link_config2 = link(bestSat1Tx, bestSat2Rx);
+link_config3 = link(bestSat2Tx, gs2Rx);
 
 % Create a cell array to hold link configurations
-link_configurations = {link_config1, link_config2, link_config3, link_config4};
+link_configurations = {link_config1, link_config2, link_config3};
 
 lnk = cat(2, link_configurations{:});  % Concatenate links horizontally
 
 % Perform link analysis with linkIntervals
 link = linkIntervals(lnk);
-
-% lnk = link(gs1Tx,sat1Rx,sat1Tx,sat2Rx,sat2Tx,sat3Rx,sat3Tx,gs2Rx);
-% link = linkIntervals(lnk);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% Earth Graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 play(sc);
