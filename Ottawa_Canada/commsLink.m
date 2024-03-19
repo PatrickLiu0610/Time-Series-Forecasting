@@ -1,6 +1,4 @@
-% satTest.m
-
-function commsLink()
+function commsLink(numSat)
 
         %% Variables
     SNR = 25; % in dB %CONFIGURABLE

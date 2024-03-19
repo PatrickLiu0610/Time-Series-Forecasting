@@ -31,15 +31,13 @@ function result_array = manual_prediction(temperature, humidity, precipitaiton, 
         result_array(i) = double(result_cell{i});
     end
     
-    % Display the MATLAB array
-    disp(result_array);
-    
-    
+    disp('-------------------------------------------------------------------------------');    
     disp(['Variable - Temp (°C):  ', num2str(result_array(1))]);
     disp(['Variable - Rel Hum (%):  ', num2str(result_array(2))]);
     disp(['Variable - Precip. Amount (mm):  ', num2str(result_array(3))]);
     disp(['Variable - Wind Spd (km/h):  ', num2str(result_array(4))]);
     disp(['Variable - Station Pressure (kPa):  ', num2str(result_array(5))]);
+    disp('-------------------------------------------------------------------------------');
 
 
 
