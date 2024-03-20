@@ -47,11 +47,15 @@ function images = linkSingleHop(weatherData)
     
     convSense = dictionary(images, sensitivity);
     
-    image = "Shrine.jpg";
+    image = {"Flower1.png", "Flower2.jpeg", "Mountain.jpeg", "Color_Wheel.jpg",...
+        "Landscape.jpg", "Denmark.jpeg", "Village.jpg", "Mickey.jpg", "Shrine.jpg", "Webcam"};
+    choice = menu("Select an image: ", image);
     camera = false;
 
+    image = images(choice);
+
     %Image Selection
-    if(camera == true)
+    if(image == "Webcam")
 
         cam = webcam(1);
         preview(cam);
@@ -59,11 +63,10 @@ function images = linkSingleHop(weatherData)
         img = snapshot(cam);
         clear('cam');
         image = "Webcam";
-
-    else
-
-        img = imread("Images/" + image);
     end
+
+
+    img = imread("Images/" + image);
 
     reduceH = round(height(img)/64);
     reduceW = round(width(img)/64);
