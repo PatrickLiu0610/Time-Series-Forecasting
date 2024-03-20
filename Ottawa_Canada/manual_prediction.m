@@ -1,5 +1,6 @@
 function result_array = manual_prediction(temperature, humidity, precipitaiton, wind_speed, pressure)
-
+    existingGUIString = "";
+    manualPredictionGUIString = "";
     % author: Gabriel Evensen #101119814
     % This script will run the get_prediction_with_inputs() function, and store the 
     % resulting values in an array, 'result'.
@@ -32,13 +33,35 @@ function result_array = manual_prediction(temperature, humidity, precipitaiton, 
     end
     
     disp('-------------------------------------------------------------------------------');    
-    disp(['Variable - Temp (°C):  ', num2str(result_array(1))]);
-    disp(['Variable - Rel Hum (%):  ', num2str(result_array(2))]);
-    disp(['Variable - Precip. Amount (mm):  ', num2str(result_array(3))]);
-    disp(['Variable - Wind Spd (km/h):  ', num2str(result_array(4))]);
-    disp(['Variable - Station Pressure (kPa):  ', num2str(result_array(5))]);
-    disp('-------------------------------------------------------------------------------');
-
+    % disp(['Variable - Temp (°C):  ', num2str(result_array(1))]);
+    % disp(['Variable - Rel Hum (%):  ', num2str(result_array(2))]);
+    % disp(['Variable - Precip. Amount (mm):  ', num2str(result_array(3))]);
+    % disp(['Variable - Wind Spd (km/h):  ', num2str(result_array(4))]);
+    % disp(['Variable - Station Pressure (kPa):  ', num2str(result_array(5))]);
+    % disp('-------------------------------------------------------------------------------');
+    formattedString = ['Variable - Temp (°C):  ', num2str(result_array(1))];
+    manualPredictionGUIString = [formattedString];
+    % manualPredictionGUIString.append('\n');
+    
+    formattedString2 = ['Variable - Rel Hum (%):  ', num2str(result_array(2))];
+    manualPredictionGUIString = [manualPredictionGUIString formattedString2];
+    % manualPredictionGUIString.append('\n');
+    
+    formattedString3 = ['Variable - Precip. Amount (mm):  ', num2str(result_array(3))];
+    manualPredictionGUIString = [manualPredictionGUIString formattedString3];
+    % manualPredictionGUIString.append('\n');
+    
+    formattedString4 = ['Variable - Wind Spd (km/h):  ', num2str(result_array(4))];
+    manualPredictionGUIString = [manualPredictionGUIString formattedString4];
+    % manualPredictionGUIString.append('\n');
+    
+    formattedString5 = ['Variable - Station Pressure (kPa):  ', num2str(result_array(5))];
+    manualPredictionGUIString = [manualPredictionGUIString formattedString5];
+    % manualPredictionGUIString.append('\n');
+    
+    manualPredictionGUIString = [manualPredictionGUIString existingGUIString];
+    assignin('caller', 'linkBudgetString', manualPredictionGUIString);
+    disp('-------------------------------------------------------------------------------');    
 
 
 end

@@ -1,3 +1,12 @@
+% LINE 140 HAVE the 'BASE' VARIABLE CHANGED TO 'CALLER' FOR
+% ERROR CORRECTION. IF YOU RUN INTO AN ERROR ON ANY OF THESE LINES CHANGE
+% THE 'CALLER' TO 'BASE' ON THIS LINE
+mainCenterString = ""; % String for the GS links
+linkBudgetString = ""; % String for getting the Satellites using the Weather Prediction
+commsLinkString = ""; % String for calling the link 
+
+mainString = "";
+guiString = "";
 close all;
 
 fprintf('------------------------------------------------------------------------------- \n');
@@ -188,7 +197,7 @@ satellites = cell(1, numel(bestSats)); % Convert to row array
 for i = 1:numel(bestSats)
     satellites{i} = ['sat' num2str(bestSats(i))];
 end
-bestSatsName = cellfun(@(x) evalin('base', x), satellites);
+bestSatsName = cellfun(@(x) evalin('caller', x), satellites);
 
 s = bestSatsName;     % list of all good weather satellites
 
@@ -207,13 +216,30 @@ for i = 1:linkNumber
     endTimes = acinterval.EndTime(i);
     duration = endTimes - startTimes;
 
-    fprintf('Running commLink.m for link %d:\n', i);
-    fprintf('Start Time: %s\n', startTimes);
-    fprintf('End Time: %s\n', endTimes);
+    % Format and append strings
+    formattedString1 = sprintf('Running commLink.m for link %d:\n', i);
+    mainString = [mainString formattedString1];
+    
+    formattedString2 = sprintf('Start Time: %s\n', startTimes);
+    mainString = [mainString formattedString2];
+    
+    formattedString3 = sprintf('End Time: %s\n', endTimes);
+    mainString = [mainString formattedString3];
+    
+    formattedString4 = sprintf('Delay: %s\n', duration);
+    mainString = [mainString formattedString4];
+    
+    mainString = [mainString '------------------------------------------------------------------------------- \n'];
+
+    % Append newline character
+    %mainString = [mainString '\n'];
+    % guiString = [guiString mainString];
+    % assignin('caller', 'outString', linkBudgetString);
 
 end
-
+guiString = [guiString mainString];
 fprintf('------------------------------------------------------------------------------- \n');
+guiString = [linkBudgetString guiString];
 
 if numel(s) > 1
 
@@ -278,6 +304,9 @@ disp("Prop Delay = " + dP + " ms");
 dT = (numel(images{1})/(250E6))*10^3;
 disp("Transmission Time = " + dT + " ms");
 disp("Total Delay = " + (dP + dT) + " ms");
+
+guiString = [guiString commsLinkString];
+assignin('caller', 'outString', guiString);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% Earth graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%

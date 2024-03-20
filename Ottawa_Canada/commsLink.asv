@@ -88,8 +88,9 @@ linkString = "";
     
         pInput = bandpower(txSig);
         
-        saveas(figure1, "figure1.png", "png");
-        saveas(figure2, "figure2.png", "png");
+        saveas(figure1, "figure1");
+        saveas(figure2, "figure2");
+    
         
         %square root raised cosine filter 
     
