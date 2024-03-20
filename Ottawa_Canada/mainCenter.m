@@ -1,7 +1,7 @@
 % LINE 140 HAVE the 'BASE' VARIABLE CHANGED TO 'CALLER' FOR
 % ERROR CORRECTION. IF YOU RUN INTO AN ERROR ON ANY OF THESE LINES CHANGE
 % THE 'CALLER' TO 'BASE' ON THIS LINE
-assignin('base', 'outString', "hello world");
+mainString = "";
 guiString = "";
 close all;
 
@@ -160,26 +160,26 @@ for i = 1:linkNumber
 
     % Format and append strings
     formattedString1 = sprintf('Running commLink.m for link %d:\n', i);
-    guiString = [guiString formattedString1];
+    mainString = [mainString formattedString1];
     
     formattedString2 = sprintf('Start Time: %s\n', startTimes);
-    guiString = [guiString formattedString2];
+    mainString = [mainString formattedString2];
     
     formattedString3 = sprintf('End Time: %s\n', endTimes);
-    guiString = [guiString formattedString3];
+    mainString = [mainString formattedString3];
     
     formattedString4 = sprintf('Delay: %s\n', duration);
-    guiString = [guiString formattedString4];
+    mainString = [mainString formattedString4];
     
     % Append newline character
-    guiString = [guiString '\n'];
+    mainString = [mainString '\n'];
 
 
 end
-
+mainString = [mainString guiString];
 fprintf('------------------------------------------------------------------------------- \n');
-guiString.append('------------------------------------------------------------------------------- \n');
-assignin('base', 'outString', guiString);
+mainString.append('------------------------------------------------------------------------------- \n');
+assignin('caller', 'outString', mainString);
 
 %%%%%%%%%%%% Calling link code as many times as satellites available %%%%%
 for i = 1:numel(s)

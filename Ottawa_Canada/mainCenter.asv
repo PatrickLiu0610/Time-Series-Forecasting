@@ -1,7 +1,7 @@
 % LINE 140 HAVE the 'BASE' VARIABLE CHANGED TO 'CALLER' FOR
 % ERROR CORRECTION. IF YOU RUN INTO AN ERROR ON ANY OF THESE LINES CHANGE
 % THE 'CALLER' TO 'BASE' ON THIS LINE
-assignin('base', 'outString', "hello world");
+mainString = "";
 guiString = "";
 close all;
 
@@ -158,32 +158,28 @@ for i = 1:linkNumber
     endTimes = acinterval.EndTime(i);
     duration = endTimes - startTimes;
 
-    fprintf('Running commLink.m for link %d:\n', i);
-    appendedString = ['Running commLink.m for link ' num2str(i) ':\n'];
-    guiString.append(appendedString);
-
-    fprintf('Start Time: %s\n', startTimes);
-    appendedString = ['Start Time: ' startTimes '\n'];
-    guiString.append(appendedString);
-
-    fprintf('End Time: %s\n', endTimes);
-    appendedString = ['End Time: ' endTimes '\n']
-    guiString.append(appendedString);
-
-
-    fprintf('Delay: %s\n', duration);
-    appendedString = ['Delay: ' d]
-    guiString.append(appendedString);
-
-    fprintf('\n');
-    guiString.append('\n');
+    % Format and append strings
+    formattedString1 = sprintf('Running commLink.m for link %d:\n', i);
+    mainString = [mainString formattedString1];
+    
+    formattedString2 = sprintf('Start Time: %s\n', startTimes);
+    mainString = [mainString formattedString2];
+    
+    formattedString3 = sprintf('End Time: %s\n', endTimes);
+    mainString = [mainString formattedString3];
+    
+    formattedString4 = sprintf('Delay: %s\n', duration);
+    mainString = [mainString formattedString4];
+    
+    % Append newline character
+    mainString = [mainString '\n'];
 
 
 end
 
 fprintf('------------------------------------------------------------------------------- \n');
-guiString.append('------------------------------------------------------------------------------- \n');
-assignin('base', 'outString', guiString);
+mainString.append('------------------------------------------------------------------------------- \n');
+assignin('base', 'outString', mainString);
 
 %%%%%%%%%%%% Calling link code as many times as satellites available %%%%%
 for i = 1:numel(s)

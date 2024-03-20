@@ -1,5 +1,5 @@
 function bestSatsChecked = linkBudget(numSat)
-    guiStringC = "";
+    guiString = evalin('caller', 'outString');
 
     % This function is responsible for finding the best satellites based on the
     % weather link budget links
@@ -10,7 +10,7 @@ function bestSatsChecked = linkBudget(numSat)
     % receving and transmitting vicinity
 
     [bestSats, requiredData] = weatherStation(numSat);
-    assignin('caller', 'guiString', guiStringC);
+    evalin
     
     bestSatsList = bestSats;
 

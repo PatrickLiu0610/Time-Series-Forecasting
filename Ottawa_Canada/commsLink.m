@@ -1,5 +1,6 @@
 function commsLink(numSat)
-guiString = "";
+existingGUIString = evalin('caller', 'outString');
+linkString = "";
 
         %% Variables
     SNR = 25; % in dB %CONFIGURABLE
@@ -174,7 +175,11 @@ guiString = "";
     
         fprintf('Bit Error Rate (BER) = %e (SNR = %d dB)\n', ber, SNR);
         formattedString2 = sprintf('Bit Error Rate (BER) = %e (SNR = %d dB)\n', ber, SNR);
-        guiString = [guiString formattedString2];
+        %guiString = formattedString2;
+        disp(existingGUIString);
+        linkString = [existingGUIString formattedString2];
+        disp(linkString);
+        assignin('base', 'outString', linkString);
 
         berVec(t) = ber; % stores the BER value in the berVec array
     end
