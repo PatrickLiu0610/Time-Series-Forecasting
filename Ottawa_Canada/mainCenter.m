@@ -1,3 +1,7 @@
+% LINE 140 HAVE the 'BASE' VARIABLE CHANGED TO 'CALLER' FOR
+% ERROR CORRECTION. IF YOU RUN INTO AN ERROR ON ANY OF THESE LINES CHANGE
+% THE 'CALLER' TO 'BASE' ON THIS LINE
+
 close all;
 
 fprintf('------------------------------------------------------------------------------- \n');
@@ -133,7 +137,7 @@ satellites = cell(1, numel(bestSats)); % Convert to row array
 for i = 1:numel(bestSats)
     satellites{i} = ['sat' num2str(bestSats(i))];
 end
-bestSatsName = cellfun(@(x) evalin('base', x), satellites);
+bestSatsName = cellfun(@(x) evalin('caller', x), satellites);
 
 s = bestSatsName;     % list of all good weather satellites
 

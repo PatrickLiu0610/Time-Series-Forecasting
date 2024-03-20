@@ -1,3 +1,7 @@
+% LINES 180, 190, 197 HAVE the 'BASE' VARIABLE CHANGED TO 'CALLER' FOR
+% ERROR CORRECTION. IF YOU RUN INTO AN ERROR ON ANY OF THESE LINES CHANGE
+% THE 'CALLER' TO 'BASE' ON THESE THREE LINES AND RERUN
+
 close all;
 clear all;
 
@@ -176,7 +180,7 @@ transmitters = cell(1,1); % Convert to row array
         satellites{i} = ['sat' num2str(bestSats(i))];
     end
     
-    bestSatsName = cellfun(@(x) evalin('base', x), satellites);
+    bestSatsName = cellfun(@(x) evalin('caller', x), satellites);
     disp(bestSatsName);
     
     % Get best satellite Receivers and Transmitters
@@ -185,14 +189,14 @@ transmitters = cell(1,1); % Convert to row array
         transmitter{i} = ['sat', num2str(bestSats(i)), 'Tx'];
     end
     
-    transmitters = cellfun(@(x) evalin('base', x), transmitter);
+    transmitters = cellfun(@(x) evalin('caller', x), transmitter);
     disp(transmitters);
     
     for i = 1:length(bestSats)
         receiver{i} = ['sat', num2str(bestSats(i)), 'Rx'];
     end
     
-    receivers = cellfun(@(x) evalin('base', x), receiver);
+    receivers = cellfun(@(x) evalin('caller', x), receiver);
     disp(receivers)
 
 bestSat1 = bestSatsName(1);
