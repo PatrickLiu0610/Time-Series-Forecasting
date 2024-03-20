@@ -1,5 +1,5 @@
 function result_array = manual_prediction(temperature, humidity, precipitaiton, wind_speed, pressure)
-    existingGUIString = evalin('caller', 'linkBudgetGUIString');
+    existingGUIString = "";
     manualPredictionGUIString = "";
     % author: Gabriel Evensen #101119814
     % This script will run the get_prediction_with_inputs() function, and store the 
@@ -60,7 +60,7 @@ function result_array = manual_prediction(temperature, humidity, precipitaiton, 
     % manualPredictionGUIString.append('\n');
     
     manualPredictionGUIString = [manualPredictionGUIString existingGUIString];
-    assignin('caller', 'linkBudgetGUIString', manualPredictionGUIString);
+    assignin('caller', 'linkBudgetString', manualPredictionGUIString);
     disp('-------------------------------------------------------------------------------');    
 
 

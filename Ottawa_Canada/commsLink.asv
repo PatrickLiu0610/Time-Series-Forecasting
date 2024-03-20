@@ -1,5 +1,5 @@
 function commsLink(numSat)
-tempString = "";
+tempString =;
 linkString = "";
 
         %% Variables
@@ -175,7 +175,7 @@ linkString = "";
     
         fprintf('Bit Error Rate (BER) = %e (SNR = %d dB)\n', ber, SNR);
         formattedString2 = sprintf('Bit Error Rate (BER) = %e (SNR = %d dB)\n', ber, SNR);
-        tempString = [tempString formattedString2];
+        linkString = [linkString formattedString2];
         %guiString = formattedString2;
         % disp(existingGUIString);
         % linkString = [existingGUIString formattedString2];
@@ -183,14 +183,12 @@ linkString = "";
 
         berVec(t) = ber; % stores the BER value in the berVec array
     end
-    linkString = [linkString tempString];
+    assignin('caller', 'commsLinkString', linkString);
 
     %% Results
     
     mer = comm.MER;
     snrEst1 = mer(txSig,therSig);
-    assignin('caller', 'commsLinkString', linkString);
-
     % scatterplot(phaseSig);
     
     %scatterplot(phaseNoise(therSig))
