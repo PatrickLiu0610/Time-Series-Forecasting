@@ -8,12 +8,12 @@ sampleTime = 60;
 sc = satelliteScenario(startTime,stopTime,sampleTime);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = 10000000;                                                                  % meters
+semiMajorAxis = 8371000;                                                                  % meters
 eccentricity = 0;
-inclination = 60;                                                                          % degrees
-rightAscensionOfAscendingNode = 0;                                                         % degrees
+inclination = 95;                                                                          % degrees
+rightAscensionOfAscendingNode = 320;                                                         % degrees
 argumentOfPeriapsis = 0;                                                                   % degrees
-trueAnomaly = 0;                                                                           % degrees
+trueAnomaly = 0;                                                                            % degrees
 sat1 = satellite(sc,semiMajorAxis,eccentricity,inclination,rightAscensionOfAscendingNode, ...
     argumentOfPeriapsis,trueAnomaly,Name="Satelitte 1");
 
@@ -21,12 +21,12 @@ gimbalrxSat1 = gimbal(sat1);
 gimbaltxSat1 = gimbal(sat1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = 10000000;                                                                   % meters
+semiMajorAxis = 8371000;                                                                   % meters
 eccentricity = 0;
-inclination = 60;                                                                           % degrees
-rightAscensionOfAscendingNode = 0;                                                          % degrees
+inclination = 95;                                                                           % degrees
+rightAscensionOfAscendingNode = 120;                                                          % degrees
 argumentOfPeriapsis = 0;                                                                    % degrees
-trueAnomaly = -55;                                                                          % degrees
+trueAnomaly = -80;                                                                          % degrees
 sat2 = satellite(sc,semiMajorAxis,eccentricity,inclination,rightAscensionOfAscendingNode, ...
     argumentOfPeriapsis,trueAnomaly,Name="Satelitte 2");
 
@@ -34,12 +34,12 @@ gimbalrxSat2 = gimbal(sat2);
 gimbaltxSat2 = gimbal(sat2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = 10000000;                                                                  % meters
+semiMajorAxis = 8371000;                                                                  % meters
 eccentricity = 0;
-inclination = 60;                                                                          % degrees
-rightAscensionOfAscendingNode = 0;                                                         % degrees
+inclination = 95;                                                                          % degrees
+rightAscensionOfAscendingNode = 520;                                                         % degrees
 argumentOfPeriapsis = 0;                                                                   % degrees
-trueAnomaly = -110;                                                                        % degrees
+trueAnomaly = -160;                                                                        % degrees
 sat3 = satellite(sc,semiMajorAxis,eccentricity,inclination,rightAscensionOfAscendingNode, ...
     argumentOfPeriapsis,trueAnomaly,Name="Satelitte 3");
 
@@ -79,11 +79,19 @@ gaussianAntenna(txSat3,DishDiameter=dishDiameter,ApertureEfficiency=apertureEffi
 gaussianAntenna(rxSat3,DishDiameter=dishDiameter,ApertureEfficiency=apertureEfficiency);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ground stations %%%%%%%%%%%%%%%%%%%%%%%%
-gs1 = groundStation(sc,Name="Ground Station 1");
+%British columbia
 
-latitude = 52.2294963;                                              % degrees
-longitude = 0.1487094;                                              % degrees
-gs2 = groundStation(sc,latitude,longitude,Name="Ground Station 2");
+latitudeGs1 = 53.726669;                                              % degrees
+longitudeGs1 = -127.647621;                                            % degrees
+
+gs1 = groundStation(sc,latitudeGs1,longitudeGs1,Name="Ground Station 1");
+
+%Nova scotia
+
+latitudeGs2 = 45;                                              % degrees
+longitudeGs2 = -63;                                              % degrees
+
+gs2 = groundStation(sc,latitudeGs2,longitudeGs2,Name="Ground Station 2");
 
 gimbalgs1 = gimbal(gs1);
 gimbalgs2 = gimbal(gs2);
@@ -126,7 +134,7 @@ pointAt(gimbalgs2, sat3); % Aim Ground Station 2 towards Satellite 3
 % Set the desired number of satellites 
 numSat = 3;
 
-bestSats= linkBudget(numSat);
+[bestSats, weatherData]= linkBudget(numSat);
 satellites = cell(1, numel(bestSats)); % Convert to row array
 
 % Get best satellite names
@@ -155,18 +163,75 @@ for i = 1:linkNumber
     fprintf('Running commLink.m for link %d:\n', i);
     fprintf('Start Time: %s\n', startTimes);
     fprintf('End Time: %s\n', endTimes);
-    fprintf('Delay: %s\n', duration);
-    fprintf('\n');
 
 end
 
 fprintf('------------------------------------------------------------------------------- \n');
 
+if numel(s) > 1
+
+    for i = 1:linkNumber-1
+
+    % Extract the times from the ith row of the table
+    startTimes = acinterval.StartTime(i+1);
+    endTimes = acinterval.EndTime(i);
+    duration = endTimes - startTimes;
+
+    fprintf('Delay: %s\n', abs(duration));
+    fprintf('\n');
+
+    end
+
+end
+
+
+lat1 = deg2rad(latitudeGs1);  % Convert degrees to radians
+lon1 = deg2rad(longitudeGs1);
+lat2 = deg2rad(latitudeGs2);
+lon2 = deg2rad(longitudeGs2);
+
+R = 6371E3;
+
+dlon = lon2 - lon1;
+dlat = lat2 - lat1;
+
+a = sin(dlat/2) * sin(dlat/2) + cos(lat1) * cos(lat2) * sin(dlon/2) * sin(dlon/2);
+c = 2 * atan2(sqrt(a), sqrt(1-a));
+
+locDistance = R * c; %Meters
+disp(['Distance (meters): ', num2str(locDistance)])
+midDis = locDistance/2;
+satDist = 2000E3;
+
+
 %%%%%%%%%%%% Calling link code as many times as satellites available %%%%%
 for i = 1:numel(s)
-    % Call the MATLAB file "commsLink.m"
-    commsLink(numSat);
+    % Call the MATLAB file "linkSingleHop.m"
+
+    % Single Hop
+    images = linkSingleHop(weatherData(i,:));
+    
+    % Image Display
+    iText = imresize(imread("text/iText.png"), [height(images{1}), width(images{1})]);
+    ibText = imresize(imread("text/ibText.png"), [height(images{1}), width(images{1})]);
+    oText = imresize(imread("text/oText.png"), [height(images{1}), width(images{1})]);
+    
+    finalImages = {iText images{1} ibText images{2} oText images{3}};
+    figure("Name","Images");
+    tiledImage = imtile(finalImages, 'GridSize', [3 2]);
+    imshow(tiledImage);
+
+
 end
+
+totalDist = (sqrt((midDis^2) + (satDist^2))) * 2;
+dP = (totalDist/(3*10^8))*10^3;
+fprintf('Calculating delay for Satellite %d \n', bestSats(i,1));
+disp("Prop Delay = " + dP + " ms");
+dT = (numel(images{1})/(250E6))*10^3;
+disp("Transmission Time = " + dT + " ms");
+disp("Total Delay = " + (dP + dT) + " ms");
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% Earth graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 play(sc);
