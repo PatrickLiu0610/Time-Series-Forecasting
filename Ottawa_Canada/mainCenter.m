@@ -2,10 +2,11 @@
 % ERROR CORRECTION. IF YOU RUN INTO AN ERROR ON ANY OF THESE LINES CHANGE
 % THE 'CALLER' TO 'BASE' ON THIS LINE
 assignin('base', 'outString', "hello world");
-
+guiString = "";
 close all;
 
 fprintf('------------------------------------------------------------------------------- \n');
+guiString.append('------------------------------------------------------------------------------- \n');
 
 startTime = datetime(2023,10,21,12,13,0);
 
@@ -212,9 +213,22 @@ for i = 1:linkNumber
     endTimes = acinterval.EndTime(i);
     duration = endTimes - startTimes;
 
-    fprintf('Running commLink.m for link %d:\n', i);
-    fprintf('Start Time: %s\n', startTimes);
-    fprintf('End Time: %s\n', endTimes);
+    % Format and append strings
+    formattedString1 = sprintf('Running commLink.m for link %d:\n', i);
+    guiString = [guiString formattedString1];
+    
+    formattedString2 = sprintf('Start Time: %s\n', startTimes);
+    guiString = [guiString formattedString2];
+    
+    formattedString3 = sprintf('End Time: %s\n', endTimes);
+    guiString = [guiString formattedString3];
+    
+    formattedString4 = sprintf('Delay: %s\n', duration);
+    guiString = [guiString formattedString4];
+    
+    % Append newline character
+    guiString = [guiString '\n'];
+
 
 end
 
@@ -255,6 +269,8 @@ disp(['Distance (meters): ', num2str(locDistance)])
 midDis = locDistance/2;
 satDist = 2000E3;
 
+guiString.append('------------------------------------------------------------------------------- \n');
+assignin('base', 'outString', guiString);
 
 %%%%%%%%%%%% Calling link code as many times as satellites available %%%%%
 for i = 1:numel(s)
