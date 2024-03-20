@@ -81,13 +81,16 @@ linkString = "";
     
         pnoise = comm.PhaseNoise(Level=-50, FrequencyOffset=15e8, SampleRate=2*B);
         y = pnoise(txSig);
-        scatterplot(txSig)
+        figure1 = scatterplot(txSig)
         title("Without Phase Noise")
-        scatterplot(y)
+        figure2 = scatterplot(y)
         title("With Phase Noise")
     
         pInput = bandpower(txSig);
-    
+        
+        saveas(figure1, "figure1.png", "png");
+        saveas(figure2, "figure2.png", "png");
+        
         %square root raised cosine filter 
     
         % Signal transmission through the rain channel
