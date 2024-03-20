@@ -1,6 +1,6 @@
 function bestSatsChecked = linkBudget(numSat)
-    guiStringC = "";
-
+    bestSatellitesString = "";
+    weatherStationString = "";
     % This function is responsible for finding the best satellites based on the
     % weather link budget links
     
@@ -10,7 +10,7 @@ function bestSatsChecked = linkBudget(numSat)
     % receving and transmitting vicinity
 
     [bestSats, requiredData] = weatherStation(numSat);
-    assignin('caller', 'guiString', guiStringC);
+    bestSatellitesString = [bestSatellitesString weatherStationString];
     
     bestSatsList = bestSats;
 
@@ -35,6 +35,10 @@ function bestSatsChecked = linkBudget(numSat)
 
         fprintf('------------------------------------------------------------------------------- \n');
         fprintf('Running link budget analysis for satellite %d:\n \n', bestSats(i,1));
+        formattedString = sprintf('Running link budget analysis for satellite %d:\n \n', bestSats(i,1));
+
+        bestSatellitesString = [bestSatellitesString formattedString];
+
 
         % Separating the weather data components of each satellite.
         temperature = requiredData(i,1);
@@ -46,7 +50,10 @@ function bestSatsChecked = linkBudget(numSat)
         % Calculate and print vapor density
         vapor_density_g_m3 = vapour_density(requiredData(i,:));
         fprintf('Vapor density is %d g/m^3 and relative humidity is %d%% \n \n',vapor_density_g_m3, relative_humidity);
+        formattedString = sprintf('Vapor density is %d g/m^3 and relative humidity is %d%% \n \n',vapor_density_g_m3, relative_humidity);
         
+        bestSatellitesString = [bestSatellitesString formattedString];
+
 
         range = 715000; % range represents the signal path length.(In m)
         T = temperature; % T represents the ambient temperature. (In Degree celcius)
@@ -70,6 +77,9 @@ function bestSatsChecked = linkBudget(numSat)
         totalAttenUplink = gasAttenUplink + rainAttenUplink + fogAttenUplink; % Sum of all attenuations
 
         fprintf('Total attenuation for uplink: %d dB \n', totalAttenUplink);
+        formattedString = sprintf('Total attenuation for uplink: %d dB \n', totalAttenUplink);
+
+        bestSatellitesString = [bestSatellitesString formattedString];
 
         %%%%%%% Downlink attenuation %%%%%%%%%%
 
@@ -83,6 +93,9 @@ function bestSatsChecked = linkBudget(numSat)
         totalAttenDownlink = gasAttenDownlink+rainAttenDownlink+fogAttenDownlink; % Sum of all attenuations
         
         fprintf('Total attenuation for downlink: %d dB \n \n', totalAttenDownlink);
+        formattedString = sprintf('Total attenuation for downlink: %d dB \n \n', totalAttenDownlink);
+
+        bestSatellitesString = [bestSatellitesString formattedString];
 
         % Polarization loss and antenna misalignment loss
         polarizationLoss_uplink = 3; % dB
@@ -120,6 +133,8 @@ function bestSatsChecked = linkBudget(numSat)
 
         %%%%%%%%%%%%%%%%%%%%%%%%%% UPLINK BUDGET %%%%%%%%%%%%%%%%%%%%%%%%%%%
         fprintf('Uplink Budget:\n');
+
+        bestSatellitesString = [bestSatellitesString 'Uplink Budget: '];
         %%%%%%%%%%%%%%%%%%%%%%%%%% groundStation %%%%%%%%%%%%
         
         % Ground Station EIRP value
@@ -158,6 +173,9 @@ function bestSatsChecked = linkBudget(numSat)
         systemLinkMarginUplink = commandSystemEb_No - Eb_No_Threshold;
         
         fprintf('systemLinkMarginUplink: %d dB \n \n',systemLinkMarginUplink)
+        formattedString = sprintf('systemLinkMarginUplink: %d dB \n \n',systemLinkMarginUplink);
+
+        bestSatellitesString = [bestSatellitesString formattedString];
 
         % "systemLinkMarginUplink" stored in array
         systemLinkMarginUplinkdata = [systemLinkMarginUplinkdata;systemLinkMarginUplink];
@@ -165,6 +183,8 @@ function bestSatsChecked = linkBudget(numSat)
 
         %%%%%%%%%%%%%%%%%%%%%%%%%% DOWNLINK BUDGET %%%%%%%%%%%%%%%%%%%%%%%%%%%
         disp(['Downlink Budget:']);
+        bestSatellitesString = [bestSatellitesString 'Downlink Budget: '];
+
         %%%%%%%%%%%%%%%%%%%%%%%%%% satellite %%%%%%%%%%%%
         
         % Satellite EIRP value
@@ -198,7 +218,11 @@ function bestSatsChecked = linkBudget(numSat)
 
         systemLinkMarginDownlink = commandSystemEb_No - Eb_No_Threshold;
         fprintf('systemLinkMarginDownlink: %d dB \n \n',systemLinkMarginDownlink);
+        formattedString = sprintf('systemLinkMarginDownlink: %d dB \n \n',systemLinkMarginDownlink);
+
+        bestSatellitesString = [bestSatellitesString formattedString];
         fprintf('------------------------------------------------------------------------------- \n');
+        bestSatellitesString = [bestSatellitesString '-----------------'];
 
         % "systemLinkMarginDownlink" values stored in an array
         systemLinkMarginDownlinkdata = [systemLinkMarginDownlinkdata;systemLinkMarginDownlink];
@@ -216,8 +240,11 @@ function bestSatsChecked = linkBudget(numSat)
 
     % Print the list of satellites with positive link margins  
     fprintf('Satellites with positive link margins: \n');
+    bestSatellitesString = [bestSatellitesString 'Satellites with positive link margins: \n'];
     for i=1:numel(bestSatsChecked)
         fprintf('Satellite %d \n', bestSatsChecked(i,1));
+        formattedString = sprintf('Satellite %d \n', bestSatsChecked(i,1));
+        bestSatellitesString = [bestSatellitesString formattedString];
     end
 
 
@@ -237,6 +264,10 @@ function bestSatsChecked = linkBudget(numSat)
         bestSatsChecked = [bestSatsChecked; bestSatsList(best_sat_index, 1)];
         disp('Satellite number:')
         disp(bestSatsChecked);
+        bestSatellitesString = [bestSatellitesString 'None of the satellites have positive link margins. Therefore selecting one satellite with the least negative link margin.'];
+        bestSatellitesString = [bestSatellitesString 'Satellite number: '];
+        bestSatellitesString = [bestSatellitesString bestSatsChecked];
     end
+    assignin('caller', 'linkBudgetString', bestSatellitesString);
     fprintf('------------------------------------------------------------------------------- \n');
 end

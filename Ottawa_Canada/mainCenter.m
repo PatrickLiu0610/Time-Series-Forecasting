@@ -1,12 +1,15 @@
 % LINE 140 HAVE the 'BASE' VARIABLE CHANGED TO 'CALLER' FOR
 % ERROR CORRECTION. IF YOU RUN INTO AN ERROR ON ANY OF THESE LINES CHANGE
 % THE 'CALLER' TO 'BASE' ON THIS LINE
+mainCenterString = ""; % String for the GS links
+linkBudgetString = ""; % String for getting the Satellites using the Weather Prediction
+commsLinkString = ""; % String for calling the link 
+
 mainString = "";
 guiString = "";
 close all;
 
 fprintf('------------------------------------------------------------------------------- \n');
-guiString.append('------------------------------------------------------------------------------- \n');
 
 startTime = datetime(2023,10,21,1,13,0);
 stopTime = startTime + hours(3);
@@ -132,7 +135,8 @@ pointAt(gimbalgs2, sat3); % Aim Ground Station 2 towards Satellite 3
 % Set the desired number of satellites 
 numSat = 3;
 
-bestSats= linkBudget(numSat);
+bestSats= linkBudget(numSat); % linkBudget.m initializes the linkBudgetString 
+% guiString = [guiString linkBudgetString];
 satellites = cell(1, numel(bestSats)); % Convert to row array
 
 % Get best satellite names
@@ -171,21 +175,26 @@ for i = 1:linkNumber
     formattedString4 = sprintf('Delay: %s\n', duration);
     mainString = [mainString formattedString4];
     
-    % Append newline character
-    mainString = [mainString '\n'];
+    mainString = [mainString '------------------------------------------------------------------------------- \n'];
 
+    % Append newline character
+    %mainString = [mainString '\n'];
+    % guiString = [guiString mainString];
+    % assignin('caller', 'outString', linkBudgetString);
 
 end
-mainString = [mainString guiString];
+guiString = [guiString mainString];
 fprintf('------------------------------------------------------------------------------- \n');
-mainString.append('------------------------------------------------------------------------------- \n');
-assignin('caller', 'outString', mainString);
+guiString = [linkBudgetString guiString];
 
 %%%%%%%%%%%% Calling link code as many times as satellites available %%%%%
 for i = 1:numel(s)
     % Call the MATLAB file "commsLink.m"
     commsLink(numSat);
 end
+guiString = [guiString commsLinkString];
+assignin('caller', 'outString', guiString);
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% Earth graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 play(sc);

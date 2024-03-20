@@ -1,5 +1,5 @@
 function [bestSatIndexArrayToSend, dataRequiredToSend] = weatherStation(numSat)
-    linkBudgetGUIString = "";
+    weatherString = "";
     % Empty array to store the results
     data = [];
 
@@ -20,7 +20,6 @@ function [bestSatIndexArrayToSend, dataRequiredToSend] = weatherStation(numSat)
 
         % Append the result to above array
         data = [data; result];
-        assignin('caller', 'guiStringC', linkBudgetGUIString);
     end    
 
 
@@ -73,11 +72,16 @@ function [bestSatIndexArrayToSend, dataRequiredToSend] = weatherStation(numSat)
     top_2_satellites = idx(1:floor(numSat/2)+1);
     disp('-------------------------------------------------------------------------------');
     disp(['Number of satellites passed to weather station: ', num2str(numSat)]);
+    formatString = sprintf(['Number of satellites passed to weather station: ', num2str(numSat)]);
+    weatherString = [weatherString formatString];
     
     % Print the list of satellites with positive link margins  
     fprintf("Best 2 satellites from weather station are: \n");
+    weatherString = [weatherString "Best 2 satellites from the weather station are: "];
     for i=1:numel(top_2_satellites)
         fprintf('Satellite %d \n', top_2_satellites(i,1));
+        formatString = sprintf('Satellite %d \n', top_2_satellites(i,1));
+        weatherString = [weatherString formatString];
     end
     disp('-------------------------------------------------------------------------------');
 
@@ -98,5 +102,5 @@ function [bestSatIndexArrayToSend, dataRequiredToSend] = weatherStation(numSat)
         rowToPrint = dataArray(rowIndex, :);
         dataRequiredToSend = [dataRequiredToSend; rowToPrint];
     end
-
+    assignin('caller', 'weatherStationString', weatherString);
 end
