@@ -2,6 +2,8 @@ clear all;
 close all;
 %generate the model
 %pyrunfile("LSTM.py");
+existingGUIString = evalin('base', 'guiString');
+guiString = "";
 
 %run forcast.py
 pyrunfile("forcast.py");
@@ -35,5 +37,28 @@ disp(['Variable - Rel Hum (%):  ', num2str(result_array(2))]);
 disp(['Variable - Precip. Amount (mm):  ', num2str(result_array(3))]);
 disp(['Variable - Wind Spd (km/h):  ', num2str(result_array(4))]);
 disp(['Variable - Station Pressure (kPa):  ', num2str(result_array(5))]);
+
+formattedString = ['Variable - Temp (°C):  ', num2str(result_array(1))];
+guiString = [guiString formattedString];
+guiString.append('\n');
+
+formattedString2 = ['Variable - Rel Hum (%):  ', num2str(result_array(2))];
+guiString = [guiString formattedString];
+guiString.append('\n');
+
+formattedString3 = ['Variable - Precip. Amount (mm):  ', num2str(result_array(3))];
+guiString = [guiString formattedString];
+guiString.append('\n');
+
+formattedString4 = ['Variable - Wind Spd (km/h):  ', num2str(result_array(4))];
+guiString = [guiString formattedString];
+guiString.append('\n');
+
+formattedString5 = ['Variable - Station Pressure (kPa):  ', num2str(result_array(5))];
+guiString = [guiString formattedString];
+guiString.append('\n');
+
+guiString = [existingGUIString guiString];
+assignin('caller', 'outString', guiString);
 
 clear get_prediction result

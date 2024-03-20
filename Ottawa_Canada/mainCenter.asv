@@ -136,7 +136,7 @@ pointAt(gimbalgs2, sat3); % Aim Ground Station 2 towards Satellite 3
 numSat = 3;
 
 bestSats= linkBudget(numSat); % linkBudget.m initializes the linkBudgetString 
-% guiString = [guiString linkBudgetString];
+guiString = [guiString linkBudgetString];
 satellites = cell(1, numel(bestSats)); % Convert to row array
 
 % Get best satellite names
@@ -179,22 +179,19 @@ for i = 1:linkNumber
 
     % Append newline character
     %mainString = [mainString '\n'];
-    % guiString = [guiString mainString];
+    guiString = [guiString mainString];
     % assignin('caller', 'outString', linkBudgetString);
 
 end
-guiString = [guiString mainString];
 fprintf('------------------------------------------------------------------------------- \n');
-guiString = [linkBudgetString guiString];
+guiString = [guiStrin]
+assignin('caller', 'outString', );
 
 %%%%%%%%%%%% Calling link code as many times as satellites available %%%%%
 for i = 1:numel(s)
     % Call the MATLAB file "commsLink.m"
     commsLink(numSat);
 end
-guiString = [guiString commsLinkString];
-assignin('caller', 'outString', guiString);
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% Earth graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 play(sc);
