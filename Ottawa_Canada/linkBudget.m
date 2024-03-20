@@ -1,4 +1,4 @@
-function bestSatsChecked = linkBudget(numSat)
+function [bestSatsChecked, dataToSend] = linkBudget(numSat)
 
 % This function is responsible for finding the best satellites based on the
 % weather link budget links
@@ -9,6 +9,11 @@ function bestSatsChecked = linkBudget(numSat)
     % receving and transmitting vicinity
 
     [bestSats, requiredData] = weatherStation(numSat);
+    disp('Best Sats from link budget');
+    disp(bestSats)
+
+    disp('requiredData from link budget');
+    disp(requiredData);
     
     bestSatsList = bestSats;
 
@@ -237,4 +242,15 @@ function bestSatsChecked = linkBudget(numSat)
         disp(bestSatsChecked);
     end
     fprintf('------------------------------------------------------------------------------- \n');
+
+    combined_data = {bestSats, requiredData};
+    disp('Combined data from link budget');
+    disp(combined_data);
+
+    checker = bestSatsChecked;
+    indices = ismember(bestSats, checker);
+    dataToSend = requiredData(indices, :); 
+    disp('Data to send from link budget');
+    disp(dataToSend);
+
 end

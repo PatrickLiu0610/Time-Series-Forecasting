@@ -2,17 +2,17 @@ close all;
 clear all;
 
 startTime = datetime(2023,10,21,1,13,0);
-stopTime = startTime + hours(5);
+stopTime = startTime + hours(3);
 sampleTime = 60;
 sc = satelliteScenario(startTime,stopTime,sampleTime);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = 10000000;                  % meters
+semiMajorAxis = 8371000;                  % meters
 eccentricity = 0;
-inclination = 0;                           % degrees
-rightAscensionOfAscendingNode = 0;         % degrees
+inclination = -40;                           % degrees
+rightAscensionOfAscendingNode = 80;         % degrees
 argumentOfPeriapsis = 0;                   % degrees
-trueAnomaly = 0;                           % degrees
+trueAnomaly = 250;                           % degrees
 sat1 = satellite(sc, ...
     semiMajorAxis, ...
     eccentricity, ...
@@ -23,9 +23,9 @@ sat1 = satellite(sc, ...
     "Name","Satellite 1");
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = 10000000;                  % meters
+semiMajorAxis = 8371000;                  % meters
 eccentricity = 0;
-inclination = -30;                          % degrees
+inclination = -50;                          % degrees
 rightAscensionOfAscendingNode = 120;       % degrees
 argumentOfPeriapsis = 0;                   % degrees
 trueAnomaly = 250;                         % degrees
@@ -40,9 +40,9 @@ sat2 = satellite(sc, ...
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Satellite 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-semiMajorAxis = 10000000;                  % meters
+semiMajorAxis = 8371000;                  % meters
 eccentricity = 0;
-inclination = -30;                          % degrees
+inclination = -40;                          % degrees
 rightAscensionOfAscendingNode = 120;       % degrees
 argumentOfPeriapsis = 0;                   % degrees
 trueAnomaly = 280;                         % degrees
@@ -72,16 +72,16 @@ gimbalSat3Tx = gimbal(sat3, ...
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Receving Antennas of Satellites %%%%%%%%%%%%%%%%
 sat1Rx = receiver(gimbalSat1Rx, ...
     "MountingLocation",[0;0;1], ...      % meters
-    "GainToNoiseTemperatureRatio",3, ... % decibels/Kelvin
-    "RequiredEbNo",4);                   % decibels
+    "GainToNoiseTemperatureRatio",23, ... % decibels/Kelvin
+    "RequiredEbNo",7);                   % decibels
 sat2Rx = receiver(gimbalSat2Rx, ...
     "MountingLocation",[0;0;1], ...      % meters
-    "GainToNoiseTemperatureRatio",3, ... % decibels/Kelvin
-    "RequiredEbNo",4);                   % decibels
+    "GainToNoiseTemperatureRatio",23, ... % decibels/Kelvin
+    "RequiredEbNo",7);                   % decibels
 sat3Rx = receiver(gimbalSat3Rx, ...
     "MountingLocation",[0;0;1], ...      % meters
-    "GainToNoiseTemperatureRatio",3, ... % decibels/Kelvin
-    "RequiredEbNo",4);                   % decibels
+    "GainToNoiseTemperatureRatio",23, ... % decibels/Kelvin
+    "RequiredEbNo",7);                   % decibels
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Transmitting Antennas Porperties %%%%%%%%%%%%%%%%
 sat1Tx = transmitter(gimbalSat1Tx, ...
@@ -107,16 +107,16 @@ gaussianAntenna(sat3Tx, ...
 %%%%%%%%%%%%%%%%%%%%%%%% Receiveing Antenna Properties %%%%%%%%%%%%%%%%%%%%
 sat1Rx = receiver(gimbalSat1Rx, ...
     "MountingLocation",[0;0;1], ...      % meters
-    "GainToNoiseTemperatureRatio",3, ... % decibels/Kelvin
-    "RequiredEbNo",4);                   % decibels
+    "GainToNoiseTemperatureRatio",0, ... % decibels/Kelvin
+    "RequiredEbNo",7);                   % decibels
 sat2Rx = receiver(gimbalSat2Rx, ...
     "MountingLocation",[0;0;1], ...      % meters
-    "GainToNoiseTemperatureRatio",3, ... % decibels/Kelvin
-    "RequiredEbNo",4);                   % decibels
+    "GainToNoiseTemperatureRatio",0, ... % decibels/Kelvin
+    "RequiredEbNo",7);                   % decibels
 sat3Rx = receiver(gimbalSat3Rx, ...
     "MountingLocation",[0;0;1], ...      % meters
-    "GainToNoiseTemperatureRatio",3, ... % decibels/Kelvin
-    "RequiredEbNo",4);                   % decibels
+    "GainToNoiseTemperatureRatio",0, ... % decibels/Kelvin
+    "RequiredEbNo",7);                   % decibels
 
 gaussianAntenna(sat1Rx, ...
     "DishDiameter",0.5);    % meters
@@ -126,13 +126,19 @@ gaussianAntenna(sat3Rx, ...
     "DishDiameter",0.5);    % meters
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ground Stations %%%%%%%%%%%%%%%%%%%%%%%%
-latitude1 = 12.9436963;          % degrees
-longitude1 = 77.6906568;         % degrees
-gs1 = groundStation(sc,latitude1,longitude1,"Name","Ground Station 1");
+%British columbia
 
-latitude2 = -33.7974039;        % degrees
-longitude2 = 151.1768208;       % degrees
-gs2 = groundStation(sc,latitude2,longitude2,"Name","Ground Station 2");
+latitude = 53.726669;                                              % degrees
+longitude = -127.647621;                                            % degrees
+
+gs1 = groundStation(sc,latitude,longitude,Name="Ground Station 1");
+
+%Nova scotia
+
+latitude = 45;                                              % degrees
+longitude = -63;                                              % degrees
+
+gs2 = groundStation(sc,latitude,longitude,Name="Ground Station 2");
 
 gimbalgs1 = gimbal(gs1);
 gimbalgs2 = gimbal(gs2);
@@ -160,15 +166,21 @@ gaussianAntenna(gs1Tx, ...
 gs2Rx = receiver(gimbalGs2, ...
     "Name","Ground Station 2 Receiver", ...
     "MountingLocation",[0;0;1], ...        % meters
-    "GainToNoiseTemperatureRatio",3, ...   % decibels/Kelvin
-    "RequiredEbNo",1);                     % decibels
+    "GainToNoiseTemperatureRatio",20, ...   % decibels/Kelvin
+    "RequiredEbNo",12);                     % decibels
 
 gaussianAntenna(gs2Rx, ...
     "DishDiameter",2); % meters
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Antenna Pointings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-bestSats = middleMan(3);
+
+% Set the desired number of satellites 
+numSat = 3;
+
+[bestSats, weatherData]= linkBudget(numSat);
+
+% bestSats = middleMan(3);
 satellites = cell(1, numel(bestSats)); % Convert to row array
 transmitters = cell(1,1); % Convert to row array
     % Get best satellite names
@@ -230,3 +242,4 @@ link = linkIntervals(lnk);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% Earth Graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 play(sc);
+
