@@ -158,21 +158,25 @@ for i = 1:linkNumber
     endTimes = acinterval.EndTime(i);
     duration = endTimes - startTimes;
 
-    % Format and append strings
-    formattedString1 = sprintf('Running commLink.m for link %d:\n', i);
-    guiString = [guiString formattedString1];
-    
-    formattedString2 = sprintf('Start Time: %s\n', startTimes);
-    guiString = [guiString formattedString2];
-    
-    formattedString3 = sprintf('End Time: %s\n', endTimes);
-    guiString = [guiString formattedString3];
-    
-    formattedString4 = sprintf('Delay: %s\n', duration);
-    guiString = [guiString formattedString4];
-    
-    % Append newline character
-    guiString = [guiString '\n'];
+    fprintf('Running commLink.m for link %d:\n', i);
+    appendedString = ['Running commLink.m for link ' num2str(i) ':\n'];
+    guiString.append(appendedString);
+
+    fprintf('Start Time: %s\n', startTimes);
+    appendedString = ['Start Time: ' startTimes '\n'];
+    guiString.append(appendedString);
+
+    fprintf('End Time: %s\n', endTimes);
+    appendedString = ['End Time: ' endTimes '\n']
+    guiString.append(appendedString);
+
+
+    fprintf('Delay: %s\n', duration);
+    appendedString = ['Delay: ' d]
+    guiString.append(appendedString);
+
+    fprintf('\n');
+    guiString.append('\n');
 
 
 end

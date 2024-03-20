@@ -1,4 +1,5 @@
 function commsLink(numSat)
+guiString = "";
 
         %% Variables
     SNR = 25; % in dB %CONFIGURABLE
@@ -172,7 +173,9 @@ function commsLink(numSat)
         [err, ber] = biterr(txData, rxData);
     
         fprintf('Bit Error Rate (BER) = %e (SNR = %d dB)\n', ber, SNR);
-        
+        formattedString2 = sprintf('Bit Error Rate (BER) = %e (SNR = %d dB)\n', ber, SNR);
+        guiString = [guiString formattedString2];
+
         berVec(t) = ber; % stores the BER value in the berVec array
     end
     
