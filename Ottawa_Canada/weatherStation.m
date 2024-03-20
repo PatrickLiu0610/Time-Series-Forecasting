@@ -1,5 +1,5 @@
 function [bestSatIndexArrayToSend, dataRequiredToSend] = weatherStation(numSat)
-
+    linkBudgetGUIString = "";
     % Empty array to store the results
     data = [];
 
@@ -20,6 +20,7 @@ function [bestSatIndexArrayToSend, dataRequiredToSend] = weatherStation(numSat)
 
         % Append the result to above array
         data = [data; result];
+        assignin('caller', 'guiStringC', linkBudgetGUIString);
     end    
 
 

@@ -1,5 +1,5 @@
-function [bestSatsChecked, dataToSend] = linkBudget(numSat)
-    guiStringC = "";
+function bestSatsChecked = linkBudget(numSat)
+    guiString = evalin('caller', 'outString');
 
     % This function is responsible for finding the best satellites based on the
     % weather link budget links
@@ -10,12 +10,7 @@ function [bestSatsChecked, dataToSend] = linkBudget(numSat)
     % receving and transmitting vicinity
 
     [bestSats, requiredData] = weatherStation(numSat);
-    disp('Best Sats from link budget');
-    disp(bestSats)
-
-    disp('requiredData from link budget');
-    disp(requiredData);
-    assignin('caller', 'guiString', guiStringC);
+    evalin
     
     bestSatsList = bestSats;
 
@@ -244,15 +239,4 @@ function [bestSatsChecked, dataToSend] = linkBudget(numSat)
         disp(bestSatsChecked);
     end
     fprintf('------------------------------------------------------------------------------- \n');
-
-    combined_data = {bestSats, requiredData};
-    disp('Combined data from link budget');
-    disp(combined_data);
-
-    checker = bestSatsChecked;
-    indices = ismember(bestSats, checker);
-    dataToSend = requiredData(indices, :); 
-    disp('Data to send from link budget');
-    disp(dataToSend);
-
 end

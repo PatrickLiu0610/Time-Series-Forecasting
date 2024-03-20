@@ -2,6 +2,7 @@ clear all;
 close all;
 %generate the model
 %pyrunfile("LSTM.py");
+existingGUIString = evalin('base', 'guiString');
 guiString = "";
 
 %run forcast.py
@@ -56,5 +57,8 @@ guiString.append('\n');
 formattedString5 = ['Variable - Station Pressure (kPa):  ', num2str(result_array(5))];
 guiString = [guiString formattedString];
 guiString.append('\n');
+
+guiString = [existingGUIString guiString];
+assignin('caller', 'outString', guiString);
 
 clear get_prediction result
