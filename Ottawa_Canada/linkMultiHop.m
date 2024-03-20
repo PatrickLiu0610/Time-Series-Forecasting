@@ -1,5 +1,5 @@
 
-function images = linkSingleHop(weatherData)
+function images = linkMultiHop(numSat, weatherData)
 
     %% Variables
     % SNR = 10; % in dB %CONFIGURABLE
@@ -103,9 +103,10 @@ function images = linkSingleHop(weatherData)
     %Encoding the data
     linkData = encode(enShaping,n,k,'hamming/binary');
     
+    weatherCount = 1;
     
     %% Link Noise Addition 
-    for s = 1:2
+    for s = 1:numSat + 1
     
         input = reshape(linkData, log2(modOrd),[]);
     
@@ -149,9 +150,14 @@ function images = linkSingleHop(weatherData)
         % samplerate = 1;
         freqOffSig = frequencyOffset(iqImbSig,2*B,offset);
     
-    
+
         % Weather Noise
-        weatherSNR = weatherAtten(weatherData);
+        if(weatherCount <=numSat)
+
+            wD = weatherData(weatherCount, :);
+        end
+
+        weatherSNR = weatherAtten(wD);
     
         %Appling the weather noise onto the altered signal
         weatherNoise = awgn(freqOffSig, weatherSNR);
@@ -168,6 +174,8 @@ function images = linkSingleHop(weatherData)
         % outputString = char(bin2dec(reshape(char(rxData.'+'0'), 8*log2(modOrd),[]).')).';
     
         % disp(outputString);
+
+        weatherCount = weatherCount+1;
     end
     
     deShaping = reshape(linkData, [], n);
