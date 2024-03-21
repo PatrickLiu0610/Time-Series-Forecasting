@@ -290,9 +290,9 @@ for i = 1:numel(s)
     oText = imresize(imread("text/oText.png"), [height(images{1}), width(images{1})]);
     
     finalImages = {iText images{1} ibText images{2} oText images{3}};
-    figure("Name","Images");
+    % figure("Name","Images");
     tiledImage = imtile(finalImages, 'GridSize', [3 2]);
-    img = imshow(tiledImage);
+    % img = imshow(tiledImage);
     imwrite(tiledImage, "./out/sat"+i+"Img.jpg", "jpg");
     assignin('caller', "outputImage"+i, 0);
 
@@ -313,3 +313,4 @@ assignin('caller', 'outString', guiString);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% Earth graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 play(sc);
+% close all;
