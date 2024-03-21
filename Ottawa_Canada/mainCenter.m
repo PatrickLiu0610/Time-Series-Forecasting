@@ -226,9 +226,6 @@ for i = 1:linkNumber
     formattedString3 = sprintf('End Time: %s\n', endTimes);
     mainString = [mainString formattedString3];
     
-    formattedString4 = sprintf('Delay: %s\n', duration);
-    mainString = [mainString formattedString4];
-    
     mainString = [mainString '------------------------------------------------------------------------------- \n'];
 
     % Append newline character
