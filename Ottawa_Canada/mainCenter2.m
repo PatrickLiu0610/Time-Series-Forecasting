@@ -1,5 +1,4 @@
 close all;
-clear all;
 
 startTime = datetime(2023,10,21,1,13,0);
 stopTime = startTime + hours(3);
