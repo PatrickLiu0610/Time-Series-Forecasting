@@ -104,17 +104,17 @@ for i = 1:length(provinces)
 end
 
 % Get user input (based on number from the list)
-provinceIndex = input('Enter the number of the desired province from the list for ground station 1: ');
+% provinceIndex = input('Enter the number of the desired province from the list for ground station 1: ');
 
 % Validate input
-while provinceIndex < 1 || provinceIndex > length(provinces)
+while provinceIndex1 < 1 || provinceIndex1 > length(provinces)
     disp('Incorrect province number. Please try again.');
     provinceIndex = input('Enter the number of the desired province from the list for ground station 1: ');
 end
 
 % Assign coordinates to GS1
-latitudeGs1 = latitudes(provinceIndex);
-longitudeGs1 = longitudes(provinceIndex);
+latitudeGs1 = latitudes(provinceIndex1);
+longitudeGs1 = longitudes(provinceIndex1);
 
 
 gs1 = groundStation(sc,latitudeGs1,longitudeGs1,Name="Ground Station 1");
@@ -133,17 +133,17 @@ for i = 1:length(provinces)
 end
 
 % Get user input (based on number from the list)
-provinceIndex = input('Enter the number of the desired province from the list for ground station 2: ');
+% provinceIndex = input('Enter the number of the desired province from the list for ground station 2: ');
 
 % Validate input
-while provinceIndex < 1 || provinceIndex > length(provinces)
+while provinceIndex2 < 1 || provinceIndex2 > length(provinces)
     disp('Incorrect province number. Please try again.');
     provinceIndex = input('Enter the number of the desired province from the list for ground station 2: ');
 end
 
 % Assign coordinates to GS2
-latitudeGs2 = latitudes(provinceIndex);
-longitudeGs2 = longitudes(provinceIndex);
+latitudeGs2 = latitudes(provinceIndex2);
+longitudeGs2 = longitudes(provinceIndex2);
 
 
 
@@ -292,7 +292,9 @@ for i = 1:numel(s)
     finalImages = {iText images{1} ibText images{2} oText images{3}};
     figure("Name","Images");
     tiledImage = imtile(finalImages, 'GridSize', [3 2]);
-    imshow(tiledImage);
+    img = imshow(tiledImage);
+    imwrite(tiledImage, "./out/sat"+i+"Img.jpg", "jpg");
+    assignin('caller', "outputImage"+i, 0);
 
 
 end
