@@ -232,7 +232,7 @@ for i = 1:numel(bestSats)
     satellites{i} = ['sat' num2str(bestSats(i))];
 end
 
-bestSatsName = cellfun(@(x) evalin('base', x), satellites);
+bestSatsName = cellfun(@(x) evalin('caller', x), satellites);
 disp(bestSatsName);
 
 % Get best satellite Receivers and Transmitters
@@ -241,14 +241,14 @@ for i = 1:length(bestSats)
     transmitter{i} = ['sat', num2str(bestSats(i)), 'Tx'];
 end
 
-transmitters = cellfun(@(x) evalin('base', x), transmitter);
+transmitters = cellfun(@(x) evalin('caller', x), transmitter);
 disp(transmitters);
 
 for i = 1:length(bestSats)
     receiver{i} = ['sat', num2str(bestSats(i)), 'Rx'];
 end
 
-receivers = cellfun(@(x) evalin('base', x), receiver);
+receivers = cellfun(@(x) evalin('caller', x), receiver);
 disp(receivers)
 
 
@@ -258,14 +258,14 @@ for i = 1:length(bestSats)
     gimbalTx{i} = ['gimbalSat', num2str(bestSats(i)), 'Tx'];
 end
 
-gimbalTxs = cellfun(@(x) evalin('base', x), gimbalTx);
+gimbalTxs = cellfun(@(x) evalin('caller', x), gimbalTx);
 disp(gimbalTxs);
 
 for i = 1:length(bestSats)
     gimbalRx{i} = ['gimbalSat', num2str(bestSats(i)), 'Rx'];
 end
 
-gimbalRxs = cellfun(@(x) evalin('base', x), gimbalRx);
+gimbalRxs = cellfun(@(x) evalin('caller', x), gimbalRx);
 disp(gimbalRxs)
 
 
