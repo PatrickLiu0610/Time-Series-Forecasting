@@ -220,7 +220,7 @@ function images = linkMultiHop(numSat, weatherData)
     size = 300;
     transSize = size/log2(modOrd);
     
-    figure("Name","Plots")
+    plotFig = figure("Name","Plots")
     tiledlayout('vertical')
     
     nexttile
@@ -271,6 +271,8 @@ function images = linkMultiHop(numSat, weatherData)
     stem(1:size,binaryOut(1:size))
     title('Output Data')
     xlim([0 size]);
+
+    assignin('caller', 'plotFigure', plotFig);
 
     images = {img BW output};
 end
