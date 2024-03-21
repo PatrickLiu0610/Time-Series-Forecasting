@@ -49,7 +49,9 @@ function images = linkSingleHop(weatherData)
     
     image = {"Flower1.png", "Flower2.jpeg", "Mountain.jpeg", "Color_Wheel.jpg",...
         "Landscape.jpg", "Denmark.jpeg", "Village.jpg", "Mickey.jpg", "Shrine.jpg", "Webcam"};
-    choice = menu("Select an image: ", image);
+    % choice = menu("Select an image: ", image);
+    choice = evalin('caller', 'imageChoice');
+    choice
     camera = false;
 
     image = images(choice);
