@@ -1,3 +1,13 @@
+% LINE 140 HAVE the 'BASE' VARIABLE CHANGED TO 'CALLER' FOR
+% ERROR CORRECTION. IF YOU RUN INTO AN ERROR ON ANY OF THESE LINES CHANGE
+% THE 'CALLER' TO 'BASE' ON THIS LINE
+mainCenterString = ""; % String for the GS links
+linkBudgetString = ""; % String for getting the Satellites using the Weather Prediction
+commsLinkString = ""; % String for calling the link 
+
+mainString = "";
+guiString = "";
+
 close all;
 
 startTime = datetime(2023,10,21,1,13,0);
@@ -374,12 +384,34 @@ satDist = 2000E3;
 
 totalDist = (sqrt((midDis^2) + (satDist^2))) * 2;
 dP = (totalDist/(3*10^8))*10^3;
-fprintf('Calculating delay for Satellite %d \n', bestSats(i,1));
+disp('Calculating delay:');
 disp("Prop Delay = " + dP + " ms");
-dT = (numel(images{1})/(250E6))*10^3;
+dT = ((numel(images{1})/(250E6))*(numel(bestSats)+1))*10^3;
 disp("Transmission Time = " + dT + " ms");
-disp("Total Delay = " + (dP + dT) + " ms");
+totalDelay = dP + dT;
+disp("Total Delay = " + totalDelay + " ms");
 
+% Format and append strings
+formattedString4 = sprintf('Calculating delay:\n');
+mainString = [mainString formattedString4];
+
+formattedString5 = sprintf("Prop Delay = %d ms \n", dP);
+mainString = [mainString formattedString5];
+
+formattedString6 = sprintf('Transmission Time = %d ms \n', dT);
+mainString = [mainString formattedString6];
+
+formattedString7 = sprintf("Total Delay = %d ms \n", totalDelay);
+mainString = [mainString formattedString7];
+
+formattedString8 = sprintf("RUN MULTI-HOP COMPLETE \n");
+mainString = [mainString formattedString8];
+
+mainString = [mainString '------------------------------------------------------------------------------- \n'];
+guiString = [guiString linkBudgetString];
+guiString = [guiString mainString];
+guiString = [guiString commsLinkString];
+assignin('caller', 'outString', guiString);
 
 
 

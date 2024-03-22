@@ -247,8 +247,6 @@ if numel(s) > 1
     endTimes = acinterval.EndTime(i);
     duration = endTimes - startTimes;
 
-    fprintf('Delay: %s\n', abs(duration));
-    fprintf('\n');
 
     end
 
@@ -298,12 +296,32 @@ end
 
 totalDist = (sqrt((midDis^2) + (satDist^2))) * 2;
 dP = (totalDist/(3*10^8))*10^3;
-fprintf('Calculating delay for Satellite %d \n', bestSats(i,1));
+disp('Calculating delay:');
 disp("Prop Delay = " + dP + " ms");
-dT = (numel(images{1})/(250E6))*10^3;
-disp("Transmission Time = " + dT + " ms");
-disp("Total Delay = " + (dP + dT) + " ms");
 
+dT = ((numel(images{1})/(250E6))*2)*10^3;
+disp("Transmission Time = " + dT + " ms");
+totalDelay = dP + dT;
+disp("Total Delay = " + totalDelay + " ms");
+
+% Format and append strings
+formattedString4 = sprintf('Calculating delay:\n');
+mainString = [mainString formattedString4];
+
+formattedString5 = sprintf("Prop Delay = %d ms \n", dP);
+mainString = [mainString formattedString5];
+
+formattedString6 = sprintf('Transmission Time = %d ms \n', dT);
+mainString = [mainString formattedString6];
+
+formattedString7 = sprintf("Total Delay = %d ms \n", totalDelay);
+mainString = [mainString formattedString7];
+
+formattedString8 = sprintf("RUN SINGLE-HOP COMPLETE \n");
+mainString = [mainString formattedString8];
+
+mainString = [mainString '------------------------------------------------------------------------------- \n'];
+guiString = [guiString mainString];
 guiString = [guiString commsLinkString];
 assignin('caller', 'outString', guiString);
 
