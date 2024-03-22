@@ -408,6 +408,7 @@ formattedString8 = sprintf("RUN MULTI-HOP COMPLETE \n");
 mainString = [mainString formattedString8];
 
 mainString = [mainString '------------------------------------------------------------------------------- \n'];
+guiString = [guiString linkBudgetString];
 guiString = [guiString mainString];
 guiString = [guiString commsLinkString];
 assignin('caller', 'outString', guiString);
