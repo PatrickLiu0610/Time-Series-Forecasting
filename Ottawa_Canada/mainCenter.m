@@ -92,7 +92,7 @@ gaussianAntenna(rxSat3,DishDiameter=dishDiameter,ApertureEfficiency=apertureEffi
 
 
 % Data for provinces for Gs1
-
+disp("provIndx1: "+provinceIndex1);
 provinces = {'British Columbia', 'Alberta', 'Saskatchewan'}; 
 
 latitudes = [53.726669, 55, 55]; 
@@ -116,12 +116,15 @@ end
 latitudeGs1 = latitudes(provinceIndex1);
 longitudeGs1 = longitudes(provinceIndex1);
 
+latitudeGs1
+longitudeGs1
+
 
 gs1 = groundStation(sc,latitudeGs1,longitudeGs1,Name="Ground Station 1");
 
 
 % Data for provinces for Gs2
-
+disp("provIndx2: "+provinceIndex2);
 provinces = {'Manitoba', 'Ontario', 'Quebec'}; 
 
 latitudes = [56.415211,50.000000, 	53.000000]; 
@@ -145,7 +148,8 @@ end
 latitudeGs2 = latitudes(provinceIndex2);
 longitudeGs2 = longitudes(provinceIndex2);
 
-
+latitudeGs2
+longitudeGs2
 
 gs2 = groundStation(sc,latitudeGs2,longitudeGs2,Name="Ground Station 2");
 
